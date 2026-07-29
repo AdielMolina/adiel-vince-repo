@@ -27,242 +27,229 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --cream: #FAF4EB;
-        --cream-deep: #F1E7D8;
-        --ink: #23304A;
-        --ink-soft: #5B6780;
-        --border-soft: rgba(35,48,74,0.14);
-        --coral: #C97A63;
-        --coral-deep: #B56A55;
-        --sky: #6D93B8;
-        --sky-tint: #E7EEF3;
-        --amber: #D8A94A;
-        --amber-tint: #F6EEDA;
-        --mint: #5C9C7C;
-        --mint-tint: #E4EFE8;
-        --red: #B5564C;
-        --red-tint: #F2E2DF;
+        --bg-deep: #0A0E1A;
+        --bg-panel: #131A2C;
+        --bg-panel-alt: #1B2338;
+        --border: #2A3350;
+        --text-primary: #E7ECF7;
+        --text-muted: #8892AD;
+        --blue: #5B8DEF;
+        --blue-deep: #3D6FD1;
+        --purple: #8B7CF6;
+        --purple-deep: #6C5CE0;
+        --success: #43B876;
+        --success-tint: #16261F;
+        --danger: #E5645A;
+        --danger-tint: #2A1A1C;
+        --amber: #D9A441;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
     .stApp {
-        background: var(--cream);
-        color: var(--ink);
+        background: radial-gradient(circle at 10% -10%, #141C36 0%, var(--bg-deep) 45%) fixed;
+        color: var(--text-primary);
     }
 
     #MainMenu, footer, header { visibility: hidden; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text-primary); }
 
     /* ---------- Hero ---------- */
     .hero {
-        padding: 2.6rem 2.6rem 2.2rem 2.6rem;
-        border-radius: 24px;
-        background: var(--coral);
-        color: #FFF8F3;
-        border: 1px solid var(--coral-deep);
-        box-shadow: 0 10px 28px rgba(35, 48, 74, 0.12);
+        padding: 2.4rem 2.6rem 2rem 2.6rem;
+        border-radius: 20px;
+        background:
+            radial-gradient(circle at 90% 0%, rgba(139,124,246,0.16) 0%, transparent 55%),
+            linear-gradient(155deg, #131B32 0%, #0E1424 100%);
+        border: 1px solid var(--border);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.35);
         margin-bottom: 1.2rem;
     }
     .hero-badge {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(255,255,255,0.16);
-        border: 1px solid rgba(255,255,255,0.35);
+        background: var(--bg-panel-alt);
+        border: 1px solid var(--border);
         border-radius: 999px;
         padding: 0.35rem 0.9rem;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--blue);
         margin-bottom: 1rem;
     }
     .hero h1 {
-        font-family: 'Fraunces', serif;
+        font-size: 2.4rem;
         font-weight: 700;
-        font-style: italic;
-        font-size: 3rem;
-        line-height: 1.05;
+        line-height: 1.12;
         margin: 0 0 0.6rem 0;
-        color: white;
     }
     .hero p {
-        font-size: 1.05rem;
-        max-width: 600px;
-        opacity: 0.95;
+        font-size: 1rem;
+        max-width: 620px;
+        color: var(--text-muted);
         margin: 0 0 1.2rem 0;
     }
-    .pill-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .pill {
-        background: #FFFDF9;
-        color: var(--ink);
-        border: 1px solid rgba(255,255,255,0.5);
-        border-radius: 999px;
-        padding: 0.55rem 1.1rem;
+    .stat-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .stat-chip {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
         font-family: 'IBM Plex Mono', monospace;
         font-size: 0.82rem;
-        font-weight: 600;
+        color: var(--text-primary);
     }
+    .stat-chip span { color: var(--blue); font-weight: 600; }
+    .trend-svg { width: 100%; max-width: 420px; height: 36px; opacity: 0.9; }
+    .trend-svg path.line { fill: none; stroke: var(--purple); stroke-width: 2; stroke-linecap: round; }
+    .trend-svg circle { fill: var(--blue); }
 
     /* ---------- Disclaimer ---------- */
     .disclaimer-block {
-        background: var(--amber-tint);
-        border: 1px solid var(--border-soft);
-        border-radius: 14px;
-        padding: 0.9rem 1.2rem;
-        color: var(--ink);
-        font-size: 0.9rem;
-        margin: 1.1rem 0 1.4rem 0;
-    }
-    .disclaimer-block b { color: var(--ink); }
-
-    /* ---------- Section blocks ---------- */
-    .section-block {
-        border-radius: 20px;
-        padding: 1.5rem 1.7rem 0.7rem 1.7rem;
-        margin-bottom: 1.1rem;
-        border: 1px solid var(--border-soft);
-        box-shadow: 0 2px 10px rgba(35,48,74,0.04);
-    }
-    .block-cream { background: var(--cream-deep); }
-    .block-sky { background: var(--sky-tint); }
-    .block-amber { background: var(--amber-tint); }
-    .block-mint { background: var(--mint-tint); }
-
-    .section-title {
-        font-family: 'Fraunces', serif;
-        font-weight: 600;
-        font-size: 1.35rem;
-        color: var(--ink);
-        margin-bottom: 0.15rem;
-    }
-    .section-sub {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--amber);
+        border-radius: 10px;
+        padding: 0.85rem 1.2rem;
+        color: var(--text-muted);
         font-size: 0.88rem;
-        color: var(--ink-soft);
-        margin-bottom: 1.1rem;
+        margin: 1.1rem 0 1.5rem 0;
     }
+    .disclaimer-block b { color: var(--text-primary); }
 
-    h2 { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink); }
-
-    /* ---------- Streamlit widget overrides ---------- */
-    .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
-    .stTabs [data-baseweb="tab-border"] { display: none !important; }
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; border-bottom: none; flex-wrap: wrap; }
-    .stTabs [data-baseweb="tab"] {
-        display: flex !important;
-        align-items: center;
-        gap: 0.4rem;
-        background: #FFFDF9;
-        color: var(--ink-soft);
+    /* ---------- Section titles ---------- */
+    .section-title {
+        font-family: 'Space Grotesk', sans-serif;
         font-weight: 600;
-        border-radius: 999px;
-        padding: 0.6rem 1.3rem;
-        border: 1px solid var(--border-soft);
-        white-space: nowrap;
-        height: auto;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        margin-bottom: 0.15rem;
+        display: flex; align-items: center; gap: 0.5rem;
     }
-    .stTabs [data-baseweb="tab"] p { white-space: nowrap; margin: 0; }
-    .stTabs [aria-selected="true"] {
-        color: var(--cream) !important;
-        background: var(--ink) !important;
-        border: 1px solid var(--ink) !important;
+    .section-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .subsection-divider { height: 1px; background: var(--border); margin: 1.3rem 0 1.1rem 0; }
+
+    /* Every section container gets the SAME consistent panel treatment.
+       Applied directly to the container's key-class (not a split div) so the
+       background truly wraps every widget inside it. */
+    .st-key-sec_patient, .st-key-sec_symptoms, .st-key-sec_blood, .st-key-sec_ultrasound {
+        background: var(--bg-panel) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 16px !important;
+        padding: 1.5rem 1.7rem 1rem 1.7rem !important;
+        margin-bottom: 1.1rem !important;
     }
-    .stTabs [data-baseweb="tab-panel"] { padding-top: 1.2rem; }
+    .section-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem 1.7rem 0.6rem 1.7rem;
+    }
 
-    label, .stSlider label, .stSelectbox label { color: var(--ink-soft) !important; font-size: 0.85rem !important; font-weight: 500 !important; }
+    label, .stSlider label, .stSelectbox label {
+        color: var(--text-muted) !important; font-size: 0.83rem !important; font-weight: 500 !important;
+    }
 
-    .stSlider [data-baseweb="slider"] > div > div { background: var(--coral) !important; }
-    .stSlider [role="slider"] { background-color: var(--coral) !important; border: 3px solid var(--cream) !important; }
+    .stSlider [data-baseweb="slider"] > div > div { background: var(--blue) !important; }
+    .stSlider [role="slider"] { background-color: var(--purple) !important; border: 3px solid var(--bg-deep) !important; }
 
-    /* Selectbox: closed state */
     [data-testid="stSelectbox"] > div > div {
-        background-color: #FFFDF9 !important;
-        border-color: var(--border-soft) !important;
-        border-radius: 12px !important;
+        background-color: var(--bg-panel-alt) !important;
+        border-color: var(--border) !important;
+        border-radius: 10px !important;
     }
-    [data-testid="stSelectbox"] > div > div * { color: var(--ink) !important; fill: var(--ink) !important; }
-    [data-testid="stSelectbox"] input { color: var(--ink) !important; }
+    [data-testid="stSelectbox"] > div > div * { color: var(--text-primary) !important; fill: var(--text-primary) !important; }
+    div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
+    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
+    div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
-    /* Selectbox: open dropdown menu */
-    div[data-baseweb="popover"] div[data-baseweb="menu"] {
-        background-color: #FFFDF9 !important;
-        border: 1px solid var(--border-soft) !important;
+    /* ---------- Custom pill selector (replaces st.tabs) ---------- */
+    div[data-testid="stRadio"] > label { display: none; }
+    div[data-testid="stRadio"] > div[role="radiogroup"] {
+        gap: 8px; flex-wrap: wrap; margin-bottom: 0.2rem;
     }
-    div[data-baseweb="popover"] li {
-        background-color: #FFFDF9 !important;
-        color: var(--ink) !important;
+    div[data-testid="stRadio"] label[data-baseweb="radio"] {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.55rem 1.2rem;
+        display: flex; align-items: center; gap: 0.5rem;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease;
     }
-    div[data-baseweb="popover"] li:hover {
-        background-color: var(--cream-deep) !important;
+    div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child { display: none; }
+    div[data-testid="stRadio"] label[data-baseweb="radio"] p {
+        margin: 0; font-weight: 600; font-size: 0.92rem; color: var(--text-muted); white-space: nowrap;
     }
+    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
+        background: linear-gradient(135deg, var(--blue-deep), var(--purple-deep));
+        border-color: var(--purple);
+    }
+    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: white; }
 
+    /* ---------- Button ---------- */
     div.stButton > button {
         width: 100%;
-        height: 3.3rem;
-        border-radius: 999px;
-        background: var(--ink);
-        color: var(--cream);
+        height: 3.2rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue) 0%, var(--purple-deep) 100%);
+        color: white;
         font-weight: 700;
-        font-family: 'Fraunces', serif;
-        font-style: italic;
-        border: 1px solid var(--ink);
-        font-size: 1.15rem;
-        box-shadow: 0 6px 16px rgba(35, 48, 74, 0.14);
+        font-family: 'Space Grotesk', sans-serif;
+        letter-spacing: 0.01em;
+        border: none;
+        font-size: 1.02rem;
+        box-shadow: 0 10px 26px rgba(91, 141, 239, 0.25);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     div.stButton > button:hover {
         transform: translateY(-1px);
-        box-shadow: 0 8px 20px rgba(35, 48, 74, 0.2);
-        color: var(--amber);
+        box-shadow: 0 12px 30px rgba(139, 124, 246, 0.35);
+        color: white;
     }
 
     /* ---------- Result banner ---------- */
     .result-banner {
-        padding: 2rem 2.2rem;
-        border-radius: 26px;
+        padding: 1.6rem 1.9rem;
+        border-radius: 16px;
         margin-bottom: 1rem;
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
     }
-    .result-high { background: var(--coral); color: white; }
-    .result-low { background: var(--mint); color: white; }
+    .result-high { border-left: 4px solid var(--danger); }
+    .result-low { border-left: 4px solid var(--success); }
     .result-banner .kicker {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.78rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        opacity: 0.85;
-        margin-bottom: 0.3rem;
+        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;
     }
-    .result-banner h2 {
-        font-family: 'Fraunces', serif;
-        font-weight: 700;
-        font-style: normal;
-        font-size: 2.4rem;
-        color: white;
-        margin: 0 0 0.5rem 0;
-        line-height: 1.05;
-    }
-    .result-banner p { margin: 0; opacity: 0.95; max-width: 640px; }
+    .result-banner h2 { font-size: 1.7rem; font-weight: 700; margin: 0 0 0.4rem 0; }
+    .result-high h2 { color: var(--danger); }
+    .result-low h2 { color: var(--success); }
+    .result-banner p { margin: 0; color: var(--text-muted); max-width: 640px; }
 
     /* Gauge */
     .gauge-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-    .gauge-outer { border-radius: 50%; width: 168px; height: 168px; display: flex; align-items: center; justify-content: center; }
+    .gauge-outer { border-radius: 50%; width: 164px; height: 164px; display: flex; align-items: center; justify-content: center; }
     .gauge-inner {
-        border-radius: 50%; width: 128px; height: 128px; background: var(--cream);
+        border-radius: 50%; width: 126px; height: 126px; background: var(--bg-deep);
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        border: 1px solid rgba(20,33,61,0.1);
+        border: 1px solid var(--border);
     }
-    .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.85rem; font-weight: 600; color: var(--ink); }
-    .gauge-label { font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
+    .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 600; }
+    .gauge-label { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
 
-    .prob-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; }
+    .prob-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; }
     .prob-table td { padding: 0.55rem 0.2rem; }
-    .prob-table .bar-bg { background: rgba(20,33,61,0.08); border-radius: 6px; height: 9px; width: 100%; overflow: hidden; }
-    .prob-table .bar-fill { height: 9px; border-radius: 6px; }
+    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 6px; height: 8px; width: 100%; overflow: hidden; }
+    .prob-table .bar-fill { height: 8px; border-radius: 6px; }
 
-    .footnote { color: var(--ink-soft); font-size: 0.82rem; font-family: 'IBM Plex Mono', monospace; }
-    hr { border-color: rgba(20,33,61,0.12) !important; }
+    .footnote { color: var(--text-muted); font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; }
     </style>
     """,
     unsafe_allow_html=True
@@ -275,24 +262,28 @@ st.markdown(
 st.markdown(
     """
     <div class="hero">
-        <div class="hero-badge">🩺 Paediatric Screening Tool</div>
-        <h1>Check the signs,<br>skip the guesswork.</h1>
-        <p>AppendiCheck Kids estimates appendicitis risk in children from clinical scores,
-        symptoms, blood work and ultrasound findings — built to support a clinical decision,
-        never replace one.</p>
-        <div class="pill-row">
-            <div class="pill">Random Forest</div>
-            <div class="pill">94.87% Accuracy</div>
-            <div class="pill">94.67% Macro F1</div>
-            <div class="pill">Screening only</div>
+        <div class="hero-badge">◆ Paediatric Screening Model</div>
+        <h1>Appendicitis risk, quantified.</h1>
+        <p>AppendiCheck Kids scores appendicitis likelihood in children from clinical scores,
+        symptoms, blood work and ultrasound findings — a statistical aid to support a clinical
+        decision, never to replace one.</p>
+        <div class="stat-row">
+            <div class="stat-chip">Model <span>Random Forest</span></div>
+            <div class="stat-chip">Accuracy <span>94.87%</span></div>
+            <div class="stat-chip">Macro F1 <span>94.67%</span></div>
+            <div class="stat-chip">Use case <span>Screening only</span></div>
         </div>
+        <svg class="trend-svg" viewBox="0 0 420 36" preserveAspectRatio="none">
+            <path class="line" d="M0 28 L60 22 L120 26 L180 12 L240 18 L300 6 L360 14 L420 4" />
+            <circle cx="420" cy="4" r="3.5" />
+        </svg>
     </div>
     """,
     unsafe_allow_html=True
 )
 
 st.markdown(
-    '<div class="disclaimer-block"><b>Disclaimer:</b> This app is an educational screening '
+    '<div class="disclaimer-block"><b>Disclaimer —</b> This app is an educational screening '
     'support tool. It does not replace professional medical diagnosis.</div>',
     unsafe_allow_html=True
 )
@@ -303,15 +294,19 @@ st.markdown(
 
 st.markdown("## Patient Assessment")
 
-tab1, tab2, tab3, tab4 = st.tabs([
-    "👤  Patient Info",
-    "🩻  Symptoms",
-    "🧪  Blood Tests",
-    "🔍  Ultrasound"
-])
+SECTION_OPTIONS = ["👤 Patient Info", "🩻 Symptoms", "🧪 Blood Tests", "🔍 Ultrasound"]
+active_section = st.radio(
+    "Section", SECTION_OPTIONS, horizontal=True, label_visibility="collapsed", key="active_section"
+)
 
-with tab1:
-    st.markdown('<div class="section-block block-cream">', unsafe_allow_html=True)
+# Dynamically hide non-active section panels, keeping all widgets mounted so
+# values persist across selections (mirrors how st.tabs keeps every tab alive).
+section_keys = ["sec_patient", "sec_symptoms", "sec_blood", "sec_ultrasound"]
+active_key = dict(zip(SECTION_OPTIONS, section_keys))[active_section]
+hide_css = "\n".join(f".st-key-{k} {{ display: none; }}" for k in section_keys if k != active_key)
+st.markdown(f"<style>{hide_css}</style>", unsafe_allow_html=True)
+
+with st.container(key="sec_patient"):
     st.markdown('<div class="section-title">Demographics</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -320,9 +315,8 @@ with tab1:
         sex = st.selectbox("Sex", ["female", "male"])
     with col3:
         bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1)
-    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="section-block block-cream">', unsafe_allow_html=True)
+    st.markdown('<div class="subsection-divider"></div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Clinical Scores</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Composite scores from standard assessment tools</div>', unsafe_allow_html=True)
     col4, col5 = st.columns(2)
@@ -330,10 +324,8 @@ with tab1:
         alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5)
     with col5:
         paediatric_score = st.slider("Paediatric Appendicitis Score", 0.0, 10.0, 5.0, 0.5)
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with tab2:
-    st.markdown('<div class="section-block block-sky">', unsafe_allow_html=True)
+with st.container(key="sec_symptoms"):
     st.markdown('<div class="section-title">Reported Symptoms</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Select yes/no for each presenting symptom</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
@@ -348,10 +340,8 @@ with tab2:
         loss_of_appetite = st.selectbox("Loss of Appetite", ["no", "yes"])
     with col5:
         peritonitis = st.selectbox("Peritonitis", ["no", "yes"])
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with tab3:
-    st.markdown('<div class="section-block block-amber">', unsafe_allow_html=True)
+with st.container(key="sec_blood"):
     st.markdown('<div class="section-title">Blood Test Results</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -360,10 +350,8 @@ with tab3:
         crp = st.slider("CRP (mg/L)", 0.0, 300.0, 10.0, 0.1)
     with col3:
         neutrophil_percentage = st.slider("Neutrophil Percentage (%)", 0.0, 100.0, 60.0, 0.5)
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with tab4:
-    st.markdown('<div class="section-block block-mint">', unsafe_allow_html=True)
+with st.container(key="sec_ultrasound"):
     st.markdown('<div class="section-title">Ultrasound Findings</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -372,13 +360,12 @@ with tab4:
         appendix_diameter = st.slider("Appendix Diameter (mm)", 0.0, 20.0, 6.0, 0.1)
     with col3:
         free_fluids = st.selectbox("Free Fluids", ["no", "yes"])
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # =========================
 # Prediction
 # =========================
 
-st.markdown("---")
+st.markdown("<div style='height:0.6rem'></div>", unsafe_allow_html=True)
 
 predict_clicked = st.button("Predict Appendicitis Risk")
 
@@ -455,7 +442,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#B5564C" if is_high_risk else "#5C9C7C"
+        gauge_color = "#E5645A" if is_high_risk else "#43B876"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -463,11 +450,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#B5564C" if str(cls).lower() == "appendicitis" else "#5C9C7C"
+            bar_color = "#E5645A" if str(cls).lower() == "appendicitis" else "#43B876"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#23304A; font-weight:600;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#5B6780;">{pct:.2f}%</td>
+                <td style="width:38%; color:#E7ECF7; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#8892AD;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
@@ -477,9 +464,9 @@ if predict_clicked:
         st.markdown("### Prediction Probability")
         st.markdown(
             f"""
-            <div class="section-block block-cream">
+            <div class="section-panel">
                 <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, rgba(20,33,61,0.08) 0deg);">
+                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1B2338 0deg);">
                         <div class="gauge-inner">
                             <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
                             <div class="gauge-label">Appendicitis risk</div>
@@ -494,7 +481,7 @@ if predict_clicked:
             unsafe_allow_html=True
         )
 
-st.markdown("---")
+st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
 st.markdown(
     '<div class="footnote">AppendiCheck Kids uses a trained Random Forest machine learning model. '
