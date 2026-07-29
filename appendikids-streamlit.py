@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 
 # Load trained model and saved feature information
-model = joblib.load("models/appendicitis_model.pkl")
-feature_names = joblib.load("models/feature_names.pkl")
-default_values = joblib.load("models/default_values.pkl")
+model = joblib.load("appendicitis_model.pkl")
+feature_names = joblib.load("model/feature_names.pkl")
+default_values = joblib.load("model/default_values.pkl")
 
 # Streamlit app title
 st.title("AppendiCheck Kids")
