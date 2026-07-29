@@ -27,213 +27,202 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --bg-deep: #0B1220;
-        --bg-panel: #131C2E;
-        --bg-panel-alt: #182238;
-        --border: #24304A;
-        --text-primary: #E7ECF5;
-        --text-muted: #8E9BB3;
-        --accent: #3ED6C4;
-        --accent-dim: #23443F;
-        --amber: #F2B84B;
-        --danger: #FB7185;
-        --danger-dim: #3A2230;
-        --success: #34D399;
-        --success-dim: #16332B;
+        --cream: #FBF1E4;
+        --cream-deep: #F3E6D3;
+        --ink: #14213D;
+        --ink-soft: #4A5674;
+        --coral: #FF5A44;
+        --coral-tint: #FFE4DE;
+        --sky: #3E8FD1;
+        --sky-tint: #DCEBFA;
+        --amber: #FFD23F;
+        --amber-tint: #FFF3D2;
+        --mint: #34C77B;
+        --mint-tint: #DBF5E7;
+        --red: #E23B3B;
+        --red-tint: #FBDEDE;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
     .stApp {
-        background: radial-gradient(circle at 15% 0%, #0E1830 0%, var(--bg-deep) 45%) fixed;
-        color: var(--text-primary);
+        background: var(--cream);
+        color: var(--ink);
     }
 
     #MainMenu, footer, header { visibility: hidden; }
 
-    h1, h2, h3, .hero h1 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.01em; }
-
     /* ---------- Hero ---------- */
     .hero {
-        padding: 2.2rem 2.4rem 1.6rem 2.4rem;
-        border-radius: 20px;
-        background: linear-gradient(155deg, #101B33 0%, #0D1526 100%);
-        border: 1px solid var(--border);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-        margin-bottom: 0.4rem;
-        position: relative;
-        overflow: hidden;
+        padding: 2.6rem 2.6rem 2.2rem 2.6rem;
+        border-radius: 26px;
+        background: var(--coral);
+        color: white;
+        box-shadow: 0 16px 40px rgba(255, 90, 68, 0.25);
+        margin-bottom: 1.2rem;
     }
-
-    .hero-eyebrow {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 0.5rem;
-    }
-
-    .hero h1 {
-        font-size: 2.3rem;
-        margin: 0 0 0.35rem 0;
-        color: var(--text-primary);
-    }
-
-    .hero p {
-        font-size: 1rem;
-        color: var(--text-muted);
-        max-width: 640px;
-        margin: 0;
-    }
-
-    /* Heartbeat divider — signature element */
-    .pulse-line { width: 100%; height: 34px; margin-top: 1.2rem; opacity: 0.85; }
-    .pulse-line path {
-        fill: none;
-        stroke: var(--accent);
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        filter: drop-shadow(0 0 4px rgba(62, 214, 196, 0.55));
-    }
-
-    /* ---------- Metric strip ---------- */
-    .metric-card {
-        padding: 1.1rem 1rem;
-        border-radius: 14px;
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        text-align: left;
-    }
-    .metric-card .label {
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 0.35rem;
-    }
-    .metric-card .value {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 1.35rem;
-        font-weight: 600;
-        color: var(--accent);
-        margin: 0;
-    }
-
-    /* ---------- Section cards ---------- */
-    .section-card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.4rem 1.6rem 0.6rem 1.6rem;
-        margin-bottom: 1.1rem;
-    }
-    .section-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.2rem;
-        display: flex;
+    .hero-badge {
+        display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-    }
-    .section-sub {
-        font-size: 0.85rem;
-        color: var(--text-muted);
+        gap: 0.4rem;
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 999px;
+        padding: 0.35rem 0.9rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
         margin-bottom: 1rem;
     }
+    .hero h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 700;
+        font-style: italic;
+        font-size: 3rem;
+        line-height: 1.05;
+        margin: 0 0 0.6rem 0;
+        color: white;
+    }
+    .hero p {
+        font-size: 1.05rem;
+        max-width: 600px;
+        opacity: 0.95;
+        margin: 0 0 1.2rem 0;
+    }
+    .pill-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .pill {
+        background: white;
+        color: var(--ink);
+        border-radius: 999px;
+        padding: 0.55rem 1.1rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.82rem;
+        font-weight: 600;
+    }
+
+    /* ---------- Section blocks ---------- */
+    .section-block {
+        border-radius: 22px;
+        padding: 1.5rem 1.7rem 0.7rem 1.7rem;
+        margin-bottom: 1.1rem;
+        border: 1px solid rgba(20,33,61,0.08);
+    }
+    .block-cream { background: var(--cream-deep); }
+    .block-sky { background: var(--sky-tint); }
+    .block-amber { background: var(--amber-tint); }
+    .block-mint { background: var(--mint-tint); }
+
+    .section-title {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 1.35rem;
+        color: var(--ink);
+        margin-bottom: 0.15rem;
+    }
+    .section-sub {
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+        margin-bottom: 1.1rem;
+    }
+
+    h2 { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink); }
 
     /* ---------- Streamlit widget overrides ---------- */
-    .stTabs [data-baseweb="tab-list"] { gap: 4px; border-bottom: 1px solid var(--border); }
+    .stTabs [data-baseweb="tab-list"] { gap: 6px; border-bottom: none; }
     .stTabs [data-baseweb="tab"] {
-        background: transparent;
-        color: var(--text-muted);
-        font-weight: 500;
-        border-radius: 10px 10px 0 0;
-        padding: 0.5rem 1rem;
+        background: white;
+        color: var(--ink-soft);
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 0.55rem 1.2rem;
+        border: 1px solid rgba(20,33,61,0.1);
     }
     .stTabs [aria-selected="true"] {
-        color: var(--accent) !important;
-        background: var(--bg-panel-alt) !important;
-        border-bottom: 2px solid var(--accent) !important;
+        color: white !important;
+        background: var(--ink) !important;
+        border: none !important;
     }
 
-    label, .stSlider label, .stSelectbox label { color: var(--text-muted) !important; font-size: 0.85rem !important; }
+    label, .stSlider label, .stSelectbox label { color: var(--ink-soft) !important; font-size: 0.85rem !important; font-weight: 500 !important; }
 
-    .stSlider [data-baseweb="slider"] > div > div { background: var(--accent) !important; }
-    .stSlider [role="slider"] { background-color: var(--accent) !important; border: 3px solid #0B1220 !important; }
+    .stSlider [data-baseweb="slider"] > div > div { background: var(--coral) !important; }
+    .stSlider [role="slider"] { background-color: var(--coral) !important; border: 3px solid var(--cream) !important; }
 
     div[data-baseweb="select"] > div {
-        background-color: var(--bg-panel-alt) !important;
-        border-color: var(--border) !important;
-        color: var(--text-primary) !important;
+        background-color: white !important;
+        border-color: rgba(20,33,61,0.15) !important;
+        color: var(--ink) !important;
+        border-radius: 12px !important;
     }
 
     div.stButton > button {
         width: 100%;
-        height: 3.1rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--accent) 0%, #21A896 100%);
-        color: #06231F;
+        height: 3.3rem;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--cream);
         font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: 'Fraunces', serif;
+        font-style: italic;
         border: none;
-        font-size: 1.02rem;
-        box-shadow: 0 8px 24px rgba(62, 214, 196, 0.25);
+        font-size: 1.15rem;
+        box-shadow: 0 10px 26px rgba(20, 33, 61, 0.25);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     div.stButton > button:hover {
         transform: translateY(-1px);
-        box-shadow: 0 10px 28px rgba(62, 214, 196, 0.4);
-        color: #06231F;
+        box-shadow: 0 12px 30px rgba(20, 33, 61, 0.35);
+        color: var(--amber);
     }
 
-    /* ---------- Result panels ---------- */
+    /* ---------- Result banner ---------- */
     .result-banner {
-        padding: 1.4rem 1.6rem;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.15rem;
-        font-weight: 600;
+        padding: 2rem 2.2rem;
+        border-radius: 26px;
         margin-bottom: 1rem;
     }
-    .result-high { background: var(--danger-dim); border: 1px solid var(--danger); color: #FFD9DF; }
-    .result-low { background: var(--success-dim); border: 1px solid var(--success); color: #D3FBEA; }
-
-    .result-note { color: var(--text-muted); font-size: 0.92rem; margin-top: -0.4rem; margin-bottom: 1.2rem; }
+    .result-high { background: var(--coral); color: white; }
+    .result-low { background: var(--mint); color: white; }
+    .result-banner .kicker {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-bottom: 0.3rem;
+    }
+    .result-banner h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 2.4rem;
+        color: white;
+        margin: 0 0 0.5rem 0;
+        line-height: 1.05;
+    }
+    .result-banner p { margin: 0; opacity: 0.95; max-width: 640px; }
 
     /* Gauge */
     .gauge-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-    .gauge-outer {
-        border-radius: 50%;
-        width: 168px; height: 168px;
-        display: flex; align-items: center; justify-content: center;
-    }
+    .gauge-outer { border-radius: 50%; width: 168px; height: 168px; display: flex; align-items: center; justify-content: center; }
     .gauge-inner {
-        border-radius: 50%;
-        width: 128px; height: 128px;
-        background: var(--bg-panel);
+        border-radius: 50%; width: 128px; height: 128px; background: var(--cream);
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        border: 1px solid var(--border);
+        border: 1px solid rgba(20,33,61,0.1);
     }
-    .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.9rem; font-weight: 600; }
-    .gauge-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.15rem; }
+    .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.85rem; font-weight: 600; color: var(--ink); }
+    .gauge-label { font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
 
     .prob-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; }
-    .prob-table td { padding: 0.5rem 0.2rem; border-bottom: 1px solid var(--border); }
-    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 6px; height: 8px; width: 100%; overflow: hidden; }
-    .prob-table .bar-fill { height: 8px; border-radius: 6px; }
+    .prob-table td { padding: 0.55rem 0.2rem; }
+    .prob-table .bar-bg { background: rgba(20,33,61,0.08); border-radius: 6px; height: 9px; width: 100%; overflow: hidden; }
+    .prob-table .bar-fill { height: 9px; border-radius: 6px; }
 
-    .footnote { color: var(--text-muted); font-size: 0.82rem; }
-    hr { border-color: var(--border) !important; }
+    .footnote { color: var(--ink-soft); font-size: 0.82rem; font-family: 'IBM Plex Mono', monospace; }
+    hr { border-color: rgba(20,33,61,0.12) !important; }
     </style>
     """,
     unsafe_allow_html=True
@@ -246,31 +235,21 @@ st.markdown(
 st.markdown(
     """
     <div class="hero">
-        <div class="hero-eyebrow">Paediatric Screening Support · v2</div>
-        <h1>🩺 AppendiCheck Kids</h1>
-        <p>A machine learning screening support tool that estimates appendicitis risk in
-        children from clinical scores, symptoms, blood work and ultrasound findings.</p>
-        <svg class="pulse-line" viewBox="0 0 600 34" preserveAspectRatio="none">
-            <path d="M0 17 H220 L235 3 L250 31 L265 10 L280 24 L295 17 H600" />
-        </svg>
+        <div class="hero-badge">🩺 Paediatric Screening Tool</div>
+        <h1>Check the signs,<br>skip the guesswork.</h1>
+        <p>AppendiCheck Kids estimates appendicitis risk in children from clinical scores,
+        symptoms, blood work and ultrasound findings — built to support a clinical decision,
+        never replace one.</p>
+        <div class="pill-row">
+            <div class="pill">Random Forest</div>
+            <div class="pill">94.87% Accuracy</div>
+            <div class="pill">94.67% Macro F1</div>
+            <div class="pill">Screening only</div>
+        </div>
     </div>
     """,
     unsafe_allow_html=True
 )
-
-m1, m2, m3, m4 = st.columns(4)
-metrics = [
-    (m1, "Final Model", "Random Forest"),
-    (m2, "Accuracy", "94.87%"),
-    (m3, "Macro F1", "94.67%"),
-    (m4, "Purpose", "Screening only"),
-]
-for col, label, value in metrics:
-    with col:
-        st.markdown(
-            f"""<div class="metric-card"><div class="label">{label}</div><div class="value">{value}</div></div>""",
-            unsafe_allow_html=True
-        )
 
 st.warning(
     "Disclaimer: This app is an educational screening support tool. "
@@ -291,7 +270,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 ])
 
 with tab1:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-block block-cream">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Demographics</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -302,7 +281,7 @@ with tab1:
         bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-block block-cream">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Clinical Scores</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Composite scores from standard assessment tools</div>', unsafe_allow_html=True)
     col4, col5 = st.columns(2)
@@ -313,7 +292,7 @@ with tab1:
     st.markdown('</div>', unsafe_allow_html=True)
 
 with tab2:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-block block-sky">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Reported Symptoms</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Select yes/no for each presenting symptom</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
@@ -331,7 +310,7 @@ with tab2:
     st.markdown('</div>', unsafe_allow_html=True)
 
 with tab3:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-block block-amber">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Blood Test Results</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -343,7 +322,7 @@ with tab3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 with tab4:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown('<div class="section-block block-mint">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Ultrasound Findings</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -401,21 +380,25 @@ if predict_clicked:
 
     if is_high_risk:
         st.markdown(
-            """<div class="result-banner result-high">⚠️ Predicted Result: Possible Appendicitis</div>""",
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            '<div class="result-note">The model predicts that this case may show signs of appendicitis. '
-            'Further medical assessment is recommended.</div>',
+            """
+            <div class="result-banner result-high">
+                <div class="kicker">Screening Result</div>
+                <h2>Possible appendicitis</h2>
+                <p>The model predicts that this case may show signs of appendicitis. Further medical
+                assessment is recommended.</p>
+            </div>
+            """,
             unsafe_allow_html=True
         )
     else:
         st.markdown(
-            """<div class="result-banner result-low">✅ Predicted Result: No Appendicitis</div>""",
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            '<div class="result-note">The model predicts that this case may not show signs of appendicitis.</div>',
+            """
+            <div class="result-banner result-low">
+                <div class="kicker">Screening Result</div>
+                <h2>No appendicitis detected</h2>
+                <p>The model predicts that this case may not show signs of appendicitis.</p>
+            </div>
+            """,
             unsafe_allow_html=True
         )
 
@@ -431,7 +414,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#FB7185" if is_high_risk else "#34D399"
+        gauge_color = "#E23B3B" if is_high_risk else "#34C77B"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -439,11 +422,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#FB7185" if str(cls).lower() == "appendicitis" else "#34D399"
+            bar_color = "#E23B3B" if str(cls).lower() == "appendicitis" else "#34C77B"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#E7ECF5;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#8E9BB3;">{pct:.2f}%</td>
+                <td style="width:38%; color:#14213D; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#4A5674;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
@@ -453,9 +436,9 @@ if predict_clicked:
         st.markdown("### Prediction Probability")
         st.markdown(
             f"""
-            <div class="section-card">
+            <div class="section-block block-cream">
                 <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #182238 0deg);">
+                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, rgba(20,33,61,0.08) 0deg);">
                         <div class="gauge-inner">
                             <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
                             <div class="gauge-label">Appendicitis risk</div>
