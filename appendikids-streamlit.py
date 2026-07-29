@@ -169,6 +169,24 @@ st.markdown(
     div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
+    /* ---------- Expander (used for plain-language glossary) ---------- */
+    [data-testid="stExpander"] {
+        background: var(--bg-panel-alt);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+    }
+    [data-testid="stExpander"] summary {
+        color: var(--blue) !important;
+        font-weight: 600;
+        font-size: 0.92rem;
+    }
+    [data-testid="stExpander"] summary:hover { color: var(--purple) !important; }
+    [data-testid="stExpander"] p { color: var(--text-primary); font-size: 0.92rem; margin-bottom: 0.5rem; }
+    [data-testid="stExpander"] b { color: var(--blue); }
+    .glossary-term { margin-bottom: 0.7rem; }
+    .glossary-term b { display: block; color: var(--purple); font-family: 'Space Grotesk', sans-serif; }
+
     /* ---------- Custom pill selector (replaces st.tabs) ---------- */
     div[data-testid="stRadio"] > label { display: none; }
     div[data-testid="stRadio"] > div[role="radiogroup"] {
@@ -288,6 +306,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+def glossary(title, terms):
+    """Render a plain-language glossary as a collapsible dropdown.
+    terms: list of (word, simple_explanation) tuples."""
+    with st.expander(f"❓ {title}"):
+        for word, explanation in terms:
+            st.markdown(
+                f'<div class="glossary-term"><b>{word}</b>{explanation}</div>',
+                unsafe_allow_html=True
+            )
+
 # =========================
 # Inputs
 # =========================
@@ -310,56 +339,149 @@ with st.container(key="sec_patient"):
     st.markdown('<div class="section-title">Demographics</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
-        age = st.slider("Age (years)", 0.0, 18.0, 10.0, 0.1)
+        age = st.slider("Age (years)", 0.0, 18.0, 10.0, 0.1,
+                         help="How old the child is, in years.")
     with col2:
-        sex = st.selectbox("Sex", ["female", "male"])
+        sex = st.selectbox("Sex", ["female", "male"],
+                            help="Whether the child is female or male.")
     with col3:
-        bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1)
+        bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1,
+                         help="Body Mass Index — a number worked out from height and weight "
+                              "that shows if a child's weight is in a healthy range for their height. "
+                              "A doctor, nurse, or clinic scale can measure this.")
 
     st.markdown('<div class="subsection-divider"></div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Clinical Scores</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Composite scores from standard assessment tools</div>', unsafe_allow_html=True)
+
+    glossary("What do these scores mean?", [
+        ("Alvarado Score",
+         " — A number from 0 to 10 that doctors work out by checking a child's symptoms, "
+         "examining their belly, and looking at a blood test. It adds points for things like pain, "
+         "fever, and high white blood cell count. The higher the number, the more likely it is "
+         "appendicitis. This score is usually given to you by a doctor or nurse after they examine "
+         "the child — you don't need to calculate it yourself."),
+        ("Paediatric Appendicitis Score",
+         " — Very similar to the Alvarado Score above, but designed specifically for children. "
+         "It's also a number from 0 to 10 given by a doctor after an exam, where higher means "
+         "more likely to be appendicitis."),
+    ])
+
     col4, col5 = st.columns(2)
     with col4:
-        alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5)
+        alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5,
+                                    help="A 0–10 score from a doctor's exam and blood test. "
+                                         "Higher = more likely to be appendicitis.")
     with col5:
-        paediatric_score = st.slider("Paediatric Appendicitis Score", 0.0, 10.0, 5.0, 0.5)
+        paediatric_score = st.slider("Paediatric Appendicitis Score", 0.0, 10.0, 5.0, 0.5,
+                                      help="Like the Alvarado Score, but made for children. "
+                                           "Higher = more likely to be appendicitis.")
 
 with st.container(key="sec_symptoms"):
     st.markdown('<div class="section-title">Reported Symptoms</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Select yes/no for each presenting symptom</div>', unsafe_allow_html=True)
+
+    glossary("What do these words mean?", [
+        ("Lower Right Abdominal Pain",
+         " — Pain on the lower right side of the belly, roughly between the hip bone and the "
+         "belly button. This is where the appendix usually sits."),
+        ("Migratory Pain",
+         " — Pain that started near the belly button and then moved to the lower right side over "
+         "several hours. This moving pattern is a classic early sign of appendicitis."),
+        ("Nausea",
+         " — Feeling sick to the stomach, like you might vomit, even if you haven't actually "
+         "thrown up."),
+        ("Loss of Appetite",
+         " — Not wanting to eat, even foods the child usually likes."),
+        ("Peritonitis",
+         " — A sign that the lining inside the belly is irritated or infected. Doctors often check "
+         "for this by gently pressing on the belly and then releasing quickly — if it hurts more "
+         "when released than when pressed, that can be a sign of peritonitis."),
+    ])
+
     col1, col2, col3 = st.columns(3)
     with col1:
-        lower_right_pain = st.selectbox("Lower Right Abdominal Pain", ["no", "yes"])
+        lower_right_pain = st.selectbox("Lower Right Abdominal Pain", ["no", "yes"],
+                                         help="Pain on the lower right side of the belly.")
     with col2:
-        migratory_pain = st.selectbox("Migratory Pain", ["no", "yes"])
+        migratory_pain = st.selectbox("Migratory Pain", ["no", "yes"],
+                                       help="Pain that started near the belly button and moved "
+                                            "to the lower right side.")
     with col3:
-        nausea = st.selectbox("Nausea", ["no", "yes"])
+        nausea = st.selectbox("Nausea", ["no", "yes"],
+                               help="Feeling like you might vomit, even without actually vomiting.")
     col4, col5 = st.columns(2)
     with col4:
-        loss_of_appetite = st.selectbox("Loss of Appetite", ["no", "yes"])
+        loss_of_appetite = st.selectbox("Loss of Appetite", ["no", "yes"],
+                                         help="Not wanting to eat, even favourite foods.")
     with col5:
-        peritonitis = st.selectbox("Peritonitis", ["no", "yes"])
+        peritonitis = st.selectbox("Peritonitis", ["no", "yes"],
+                                    help="Belly hurts more when pressure is released quickly than "
+                                         "when it's pressed — usually checked by a doctor.")
 
 with st.container(key="sec_blood"):
     st.markdown('<div class="section-title">Blood Test Results</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">These numbers come from a blood test done at a clinic or hospital</div>', unsafe_allow_html=True)
+
+    glossary("What do these blood test words mean?", [
+        ("WBC Count (White Blood Cell Count)",
+         " — White blood cells are the body's defence against infection. This number counts how "
+         "many are in the blood. When the body is fighting an infection like appendicitis, this "
+         "number often goes up."),
+        ("CRP (C-Reactive Protein)",
+         " — A substance made by the body when there's swelling or infection somewhere inside. "
+         "The higher this number, the more inflammation is likely happening in the body."),
+        ("Neutrophil Percentage",
+         " — Neutrophils are a type of white blood cell that respond first and fastest to an "
+         "infection, especially one caused by bacteria. A higher percentage of neutrophils often "
+         "means the body is actively fighting a bacterial infection."),
+    ])
+
     col1, col2, col3 = st.columns(3)
     with col1:
-        wbc_count = st.slider("WBC Count (×10⁹/L)", 0.0, 40.0, 10.0, 0.1)
+        wbc_count = st.slider("WBC Count (×10⁹/L)", 0.0, 40.0, 10.0, 0.1,
+                               help="White blood cells fight infection. Higher usually means the "
+                                    "body may be fighting an infection.")
     with col2:
-        crp = st.slider("CRP (mg/L)", 0.0, 300.0, 10.0, 0.1)
+        crp = st.slider("CRP (mg/L)", 0.0, 300.0, 10.0, 0.1,
+                         help="Rises when there's swelling or infection in the body. "
+                              "Higher = more inflammation.")
     with col3:
-        neutrophil_percentage = st.slider("Neutrophil Percentage (%)", 0.0, 100.0, 60.0, 0.5)
+        neutrophil_percentage = st.slider("Neutrophil Percentage (%)", 0.0, 100.0, 60.0, 0.5,
+                                           help="A type of white blood cell that fights bacteria. "
+                                                "Higher often means an active infection.")
 
 with st.container(key="sec_ultrasound"):
     st.markdown('<div class="section-title">Ultrasound Findings</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">These come from an ultrasound scan done by a doctor or radiographer</div>', unsafe_allow_html=True)
+
+    glossary("What do these ultrasound words mean?", [
+        ("Ultrasound",
+         " — A scan that uses sound waves to take a picture of the inside of the belly. "
+         "It doesn't hurt and doesn't use radiation. A trained person (a doctor or radiographer) "
+         "does the scan and looks at the pictures."),
+        ("Appendix Seen on Ultrasound",
+         " — Whether the person doing the scan was able to clearly see the appendix in the pictures."),
+        ("Appendix Diameter",
+         " — How wide the appendix measures on the scan, in millimetres (mm). A wider appendix "
+         "(usually above about 6–7 mm) can be a sign of appendicitis."),
+        ("Free Fluid",
+         " — Extra fluid seen around the organs in the belly on the scan. This can be a sign of "
+         "inflammation, or in serious cases, that the appendix has burst."),
+    ])
+
     col1, col2, col3 = st.columns(3)
     with col1:
-        appendix_on_us = st.selectbox("Appendix Seen on Ultrasound", ["no", "yes"])
+        appendix_on_us = st.selectbox("Appendix Seen on Ultrasound", ["no", "yes"],
+                                       help="Whether the appendix could be clearly seen on the scan.")
     with col2:
-        appendix_diameter = st.slider("Appendix Diameter (mm)", 0.0, 20.0, 6.0, 0.1)
+        appendix_diameter = st.slider("Appendix Diameter (mm)", 0.0, 20.0, 6.0, 0.1,
+                                       help="How wide the appendix measures on the scan. Wider "
+                                            "(usually over 6–7mm) can suggest appendicitis.")
     with col3:
-        free_fluids = st.selectbox("Free Fluids", ["no", "yes"])
+        free_fluids = st.selectbox("Free Fluids", ["no", "yes"],
+                                    help="Extra fluid seen in the belly on the scan — can be a "
+                                         "sign of inflammation.")
 
 # =========================
 # Prediction
@@ -412,8 +534,9 @@ if predict_clicked:
             <div class="result-banner result-high">
                 <div class="kicker">Screening Result</div>
                 <h2>Possible appendicitis</h2>
-                <p>The model predicts that this case may show signs of appendicitis. Further medical
-                assessment is recommended.</p>
+                <p>Based on what was entered, this computer program thinks appendicitis is possible.
+                This is not a diagnosis — please take the child to see a doctor or go to a clinic
+                or hospital as soon as you can, so a real doctor can check them properly.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -424,7 +547,9 @@ if predict_clicked:
             <div class="result-banner result-low">
                 <div class="kicker">Screening Result</div>
                 <h2>No appendicitis detected</h2>
-                <p>The model predicts that this case may not show signs of appendicitis.</p>
+                <p>Based on what was entered, this computer program does not think appendicitis is
+                likely right now. This is not a diagnosis — if the child is still in pain or you're
+                worried, it's always okay to see a doctor anyway.</p>
             </div>
             """,
             unsafe_allow_html=True
