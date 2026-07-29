@@ -30,20 +30,21 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --cream: #FBF1E4;
-        --cream-deep: #F3E6D3;
-        --ink: #14213D;
-        --ink-soft: #4A5674;
-        --coral: #FF5A44;
-        --coral-tint: #FFE4DE;
-        --sky: #3E8FD1;
-        --sky-tint: #DCEBFA;
-        --amber: #FFD23F;
-        --amber-tint: #FFF3D2;
-        --mint: #34C77B;
-        --mint-tint: #DBF5E7;
-        --red: #E23B3B;
-        --red-tint: #FBDEDE;
+        --cream: #FAF4EB;
+        --cream-deep: #F1E7D8;
+        --ink: #23304A;
+        --ink-soft: #5B6780;
+        --border-soft: rgba(35,48,74,0.14);
+        --coral: #C97A63;
+        --coral-deep: #B56A55;
+        --sky: #6D93B8;
+        --sky-tint: #E7EEF3;
+        --amber: #D8A94A;
+        --amber-tint: #F6EEDA;
+        --mint: #5C9C7C;
+        --mint-tint: #E4EFE8;
+        --red: #B5564C;
+        --red-tint: #F2E2DF;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
@@ -58,18 +59,19 @@ st.markdown(
     /* ---------- Hero ---------- */
     .hero {
         padding: 2.6rem 2.6rem 2.2rem 2.6rem;
-        border-radius: 26px;
+        border-radius: 24px;
         background: var(--coral);
-        color: white;
-        box-shadow: 0 16px 40px rgba(255, 90, 68, 0.25);
+        color: #FFF8F3;
+        border: 1px solid var(--coral-deep);
+        box-shadow: 0 10px 28px rgba(35, 48, 74, 0.12);
         margin-bottom: 1.2rem;
     }
     .hero-badge {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(255,255,255,0.18);
-        border: 1px solid rgba(255,255,255,0.4);
+        background: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.35);
         border-radius: 999px;
         padding: 0.35rem 0.9rem;
         font-size: 0.78rem;
@@ -94,8 +96,9 @@ st.markdown(
     }
     .pill-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .pill {
-        background: white;
+        background: #FFFDF9;
         color: var(--ink);
+        border: 1px solid rgba(255,255,255,0.5);
         border-radius: 999px;
         padding: 0.55rem 1.1rem;
         font-family: 'IBM Plex Mono', monospace;
@@ -103,12 +106,25 @@ st.markdown(
         font-weight: 600;
     }
 
+    /* ---------- Disclaimer ---------- */
+    .disclaimer-block {
+        background: var(--amber-tint);
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+        padding: 0.9rem 1.2rem;
+        color: var(--ink);
+        font-size: 0.9rem;
+        margin: 1.1rem 0 1.4rem 0;
+    }
+    .disclaimer-block b { color: var(--ink); }
+
     /* ---------- Section blocks ---------- */
     .section-block {
-        border-radius: 22px;
+        border-radius: 20px;
         padding: 1.5rem 1.7rem 0.7rem 1.7rem;
         margin-bottom: 1.1rem;
-        border: 1px solid rgba(20,33,61,0.08);
+        border: 1px solid var(--border-soft);
+        box-shadow: 0 2px 10px rgba(35,48,74,0.04);
     }
     .block-cream { background: var(--cream-deep); }
     .block-sky { background: var(--sky-tint); }
@@ -131,31 +147,55 @@ st.markdown(
     h2 { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink); }
 
     /* ---------- Streamlit widget overrides ---------- */
-    .stTabs [data-baseweb="tab-list"] { gap: 6px; border-bottom: none; }
+    .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
+    .stTabs [data-baseweb="tab-border"] { display: none !important; }
+    .stTabs [data-baseweb="tab-list"] { gap: 8px; border-bottom: none; flex-wrap: wrap; }
     .stTabs [data-baseweb="tab"] {
-        background: white;
+        display: flex !important;
+        align-items: center;
+        gap: 0.4rem;
+        background: #FFFDF9;
         color: var(--ink-soft);
         font-weight: 600;
         border-radius: 999px;
-        padding: 0.55rem 1.2rem;
-        border: 1px solid rgba(20,33,61,0.1);
+        padding: 0.6rem 1.3rem;
+        border: 1px solid var(--border-soft);
+        white-space: nowrap;
+        height: auto;
     }
+    .stTabs [data-baseweb="tab"] p { white-space: nowrap; margin: 0; }
     .stTabs [aria-selected="true"] {
-        color: white !important;
+        color: var(--cream) !important;
         background: var(--ink) !important;
-        border: none !important;
+        border: 1px solid var(--ink) !important;
     }
+    .stTabs [data-baseweb="tab-panel"] { padding-top: 1.2rem; }
 
     label, .stSlider label, .stSelectbox label { color: var(--ink-soft) !important; font-size: 0.85rem !important; font-weight: 500 !important; }
 
     .stSlider [data-baseweb="slider"] > div > div { background: var(--coral) !important; }
     .stSlider [role="slider"] { background-color: var(--coral) !important; border: 3px solid var(--cream) !important; }
 
-    div[data-baseweb="select"] > div {
-        background-color: white !important;
-        border-color: rgba(20,33,61,0.15) !important;
-        color: var(--ink) !important;
+    /* Selectbox: closed state */
+    [data-testid="stSelectbox"] > div > div {
+        background-color: #FFFDF9 !important;
+        border-color: var(--border-soft) !important;
         border-radius: 12px !important;
+    }
+    [data-testid="stSelectbox"] > div > div * { color: var(--ink) !important; fill: var(--ink) !important; }
+    [data-testid="stSelectbox"] input { color: var(--ink) !important; }
+
+    /* Selectbox: open dropdown menu */
+    div[data-baseweb="popover"] div[data-baseweb="menu"] {
+        background-color: #FFFDF9 !important;
+        border: 1px solid var(--border-soft) !important;
+    }
+    div[data-baseweb="popover"] li {
+        background-color: #FFFDF9 !important;
+        color: var(--ink) !important;
+    }
+    div[data-baseweb="popover"] li:hover {
+        background-color: var(--cream-deep) !important;
     }
 
     div.stButton > button {
@@ -167,14 +207,14 @@ st.markdown(
         font-weight: 700;
         font-family: 'Fraunces', serif;
         font-style: italic;
-        border: none;
+        border: 1px solid var(--ink);
         font-size: 1.15rem;
-        box-shadow: 0 10px 26px rgba(20, 33, 61, 0.25);
+        box-shadow: 0 6px 16px rgba(35, 48, 74, 0.14);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     div.stButton > button:hover {
         transform: translateY(-1px);
-        box-shadow: 0 12px 30px rgba(20, 33, 61, 0.35);
+        box-shadow: 0 8px 20px rgba(35, 48, 74, 0.2);
         color: var(--amber);
     }
 
@@ -251,9 +291,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.warning(
-    "Disclaimer: This app is an educational screening support tool. "
-    "It does not replace professional medical diagnosis."
+st.markdown(
+    '<div class="disclaimer-block"><b>Disclaimer:</b> This app is an educational screening '
+    'support tool. It does not replace professional medical diagnosis.</div>',
+    unsafe_allow_html=True
 )
 
 # =========================
@@ -414,7 +455,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#E23B3B" if is_high_risk else "#34C77B"
+        gauge_color = "#B5564C" if is_high_risk else "#5C9C7C"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -422,11 +463,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#E23B3B" if str(cls).lower() == "appendicitis" else "#34C77B"
+            bar_color = "#B5564C" if str(cls).lower() == "appendicitis" else "#5C9C7C"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#14213D; font-weight:600;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#4A5674;">{pct:.2f}%</td>
+                <td style="width:38%; color:#23304A; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#5B6780;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
