@@ -27,229 +27,243 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --bg-deep: #0A0E1A;
-        --bg-panel: #131A2C;
-        --bg-panel-alt: #1B2338;
-        --border: #2A3350;
-        --text-primary: #E7ECF7;
-        --text-muted: #8892AD;
-        --blue: #5B8DEF;
-        --blue-deep: #3D6FD1;
-        --purple: #8B7CF6;
-        --purple-deep: #6C5CE0;
-        --success: #43B876;
-        --success-tint: #16261F;
-        --danger: #E5645A;
-        --danger-tint: #2A1A1C;
-        --amber: #D9A441;
+        --bg-deep: #0B0B0B;
+        --bg-panel: #161616;
+        --bg-panel-alt: #1F1F1F;
+        --border: #3A3A38;
+        --border-soft: #2A2A28;
+        --ink: #F2F0EC;
+        --ink-muted: #9A9A96;
+        --brick: #C25C4E;
+        --brick-tint: #241A18;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
     .stApp {
-        background: radial-gradient(circle at 10% -10%, #141C36 0%, var(--bg-deep) 45%) fixed;
-        color: var(--text-primary);
+        background: var(--bg-deep);
+        color: var(--ink);
     }
 
     #MainMenu, footer, header { visibility: hidden; }
-    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text-primary); }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--ink); }
 
-    /* ---------- Hero ---------- */
+    /* ---------- Hero (split layout, like a portfolio cover) ---------- */
     .hero {
-        padding: 2.4rem 2.6rem 2rem 2.6rem;
-        border-radius: 20px;
-        background:
-            radial-gradient(circle at 90% 0%, rgba(139,124,246,0.16) 0%, transparent 55%),
-            linear-gradient(155deg, #131B32 0%, #0E1424 100%);
         border: 1px solid var(--border);
-        box-shadow: 0 16px 40px rgba(0,0,0,0.35);
         margin-bottom: 1.2rem;
+        overflow: hidden;
     }
-    .hero-badge {
-        display: inline-flex;
+    .hero-grid { display: flex; min-height: 300px; }
+    .hero-visual {
+        flex: 0 0 34%;
+        background: #0E0E0E;
+        position: relative;
+        display: flex;
         align-items: center;
-        gap: 0.4rem;
-        background: var(--bg-panel-alt);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 0.35rem 0.9rem;
+        justify-content: center;
+        border-right: 1px solid var(--border);
+    }
+    .hero-visual svg { width: 78%; height: 78%; }
+    .hero-visual circle { fill: none; stroke: var(--border); stroke-width: 1; }
+    .hero-visual circle.ring-hi { stroke: var(--ink-muted); }
+    .hero-content {
+        flex: 1;
+        padding: 2.2rem 2.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .hero-eyebrow {
         font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: var(--blue);
-        margin-bottom: 1rem;
+        color: var(--ink-muted);
+        margin-bottom: 0.9rem;
     }
     .hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        line-height: 1.12;
-        margin: 0 0 0.6rem 0;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        line-height: 1.08;
+        margin: 0 0 0.9rem 0;
     }
     .hero p {
-        font-size: 1rem;
-        max-width: 620px;
-        color: var(--text-muted);
-        margin: 0 0 1.2rem 0;
+        font-size: 0.98rem;
+        max-width: 520px;
+        color: var(--ink-muted);
+        margin: 0 0 1.3rem 0;
+        font-family: 'Inter', sans-serif;
     }
-    .stat-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
-    .stat-chip {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
+    .hero-credit {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-top: 1px solid var(--border-soft);
+        padding-top: 0.9rem;
+        margin-top: 0.3rem;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+    .hero-credit .who { font-size: 0.92rem; color: var(--ink); }
+    .hero-credit .who span { display: block; color: var(--ink-muted); font-size: 0.8rem; }
+    .hero-credit .stats {
         font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.82rem;
-        color: var(--text-primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-muted);
+        text-align: right;
     }
-    .stat-chip span { color: var(--blue); font-weight: 600; }
-    .trend-svg { width: 100%; max-width: 420px; height: 36px; opacity: 0.9; }
-    .trend-svg path.line { fill: none; stroke: var(--purple); stroke-width: 2; stroke-linecap: round; }
-    .trend-svg circle { fill: var(--blue); }
+    .hero-credit .stats b { color: var(--ink); }
 
     /* ---------- Disclaimer ---------- */
     .disclaimer-block {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-left: 3px solid var(--amber);
-        border-radius: 10px;
+        border-left: 2px solid var(--ink-muted);
         padding: 0.85rem 1.2rem;
-        color: var(--text-muted);
+        color: var(--ink-muted);
         font-size: 0.88rem;
         margin: 1.1rem 0 1.5rem 0;
     }
-    .disclaimer-block b { color: var(--text-primary); }
+    .disclaimer-block b { color: var(--ink); }
 
     /* ---------- Section titles ---------- */
     .section-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: var(--text-primary);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--ink);
         margin-bottom: 0.15rem;
         display: flex; align-items: center; gap: 0.5rem;
     }
-    .section-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
-    .subsection-divider { height: 1px; background: var(--border); margin: 1.3rem 0 1.1rem 0; }
+    .section-sub { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 1rem; }
+    .subsection-divider { height: 1px; background: var(--border-soft); margin: 1.3rem 0 1.1rem 0; }
 
-    /* Every section container gets the SAME consistent panel treatment.
-       Applied directly to the container's key-class (not a split div) so the
-       background truly wraps every widget inside it. */
+    /* Every section container gets the SAME consistent panel treatment. */
     .st-key-sec_patient, .st-key-sec_symptoms, .st-key-sec_blood, .st-key-sec_ultrasound {
         background: var(--bg-panel) !important;
         border: 1px solid var(--border) !important;
-        border-radius: 16px !important;
-        padding: 1.5rem 1.7rem 1rem 1.7rem !important;
+        border-radius: 2px !important;
+        padding: 1.6rem 1.8rem 1.1rem 1.8rem !important;
         margin-bottom: 1.1rem !important;
     }
     .section-panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem 1.7rem 0.6rem 1.7rem;
+        border-radius: 2px;
+        padding: 1.6rem 1.8rem 0.7rem 1.8rem;
     }
 
     label, .stSlider label, .stSelectbox label {
-        color: var(--text-muted) !important; font-size: 0.83rem !important; font-weight: 500 !important;
+        color: var(--ink-muted) !important; font-size: 0.83rem !important; font-weight: 500 !important;
     }
 
-    .stSlider [data-baseweb="slider"] > div > div { background: var(--blue) !important; }
-    .stSlider [role="slider"] { background-color: var(--purple) !important; border: 3px solid var(--bg-deep) !important; }
+    .stSlider [data-baseweb="slider"] > div > div { background: var(--ink) !important; }
+    .stSlider [role="slider"] { background-color: var(--ink) !important; border: 3px solid var(--bg-deep) !important; }
 
     [data-testid="stSelectbox"] > div > div {
         background-color: var(--bg-panel-alt) !important;
         border-color: var(--border) !important;
-        border-radius: 10px !important;
+        border-radius: 2px !important;
     }
-    [data-testid="stSelectbox"] > div > div * { color: var(--text-primary) !important; fill: var(--text-primary) !important; }
+    [data-testid="stSelectbox"] > div > div * { color: var(--ink) !important; fill: var(--ink) !important; }
     div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
-    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
+    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--ink) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
         background: var(--bg-panel-alt);
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 2px;
         margin-bottom: 1rem;
     }
     [data-testid="stExpander"] summary {
-        color: var(--blue) !important;
+        color: var(--ink) !important;
         font-weight: 600;
         font-size: 0.92rem;
     }
-    [data-testid="stExpander"] summary:hover { color: var(--purple) !important; }
-    [data-testid="stExpander"] p { color: var(--text-primary); font-size: 0.92rem; margin-bottom: 0.5rem; }
-    [data-testid="stExpander"] b { color: var(--blue); }
+    [data-testid="stExpander"] summary:hover { color: var(--brick) !important; }
+    [data-testid="stExpander"] p { color: var(--ink); font-size: 0.92rem; margin-bottom: 0.5rem; }
+    [data-testid="stExpander"] b { color: var(--ink); }
     .glossary-term { margin-bottom: 0.7rem; }
-    .glossary-term b { display: block; color: var(--purple); font-family: 'Space Grotesk', sans-serif; }
+    .glossary-term b {
+        display: block; color: var(--ink); font-family: 'Playfair Display', serif; font-weight: 700;
+    }
 
-    /* ---------- Custom pill selector (replaces st.tabs) ---------- */
+    /* ---------- Section nav — thumbnail cards, like the portfolio strip ---------- */
     div[data-testid="stRadio"] > label { display: none; }
     div[data-testid="stRadio"] > div[role="radiogroup"] {
-        gap: 8px; flex-wrap: wrap; margin-bottom: 0.2rem;
+        gap: 10px; flex-wrap: wrap; margin-bottom: 0.2rem;
     }
     div[data-testid="stRadio"] label[data-baseweb="radio"] {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 0.55rem 1.2rem;
+        border-radius: 2px;
+        padding: 0.7rem 1.3rem;
         display: flex; align-items: center; gap: 0.5rem;
         cursor: pointer;
-        transition: background 0.15s ease, border-color 0.15s ease;
+        transition: border-color 0.15s ease, background 0.15s ease;
     }
     div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child { display: none; }
     div[data-testid="stRadio"] label[data-baseweb="radio"] p {
-        margin: 0; font-weight: 600; font-size: 0.92rem; color: var(--text-muted); white-space: nowrap;
+        margin: 0; font-weight: 600; font-size: 0.88rem; color: var(--ink-muted); white-space: nowrap;
+        text-transform: uppercase; letter-spacing: 0.04em;
     }
     div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
-        background: linear-gradient(135deg, var(--blue-deep), var(--purple-deep));
-        border-color: var(--purple);
+        background: var(--bg-panel-alt);
+        border: 1px solid var(--ink);
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: white; }
+    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: var(--ink); }
 
-    /* ---------- Button ---------- */
+    /* ---------- Button — ghost outline, inverts on hover ---------- */
     div.stButton > button {
         width: 100%;
         height: 3.2rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--blue) 0%, var(--purple-deep) 100%);
-        color: white;
+        border-radius: 2px;
+        background: transparent;
+        color: var(--ink);
         font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
-        letter-spacing: 0.01em;
-        border: none;
-        font-size: 1.02rem;
-        box-shadow: 0 10px 26px rgba(91, 141, 239, 0.25);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        border: 1px solid var(--ink);
+        transition: background 0.15s ease, color 0.15s ease;
     }
     div.stButton > button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 30px rgba(139, 124, 246, 0.35);
-        color: white;
+        background: var(--ink);
+        color: var(--bg-deep);
+        border-color: var(--ink);
     }
 
     /* ---------- Result banner ---------- */
     .result-banner {
-        padding: 1.6rem 1.9rem;
-        border-radius: 16px;
+        padding: 1.7rem 2rem;
+        border-radius: 2px;
         margin-bottom: 1rem;
         background: var(--bg-panel);
         border: 1px solid var(--border);
     }
-    .result-high { border-left: 4px solid var(--danger); }
-    .result-low { border-left: 4px solid var(--success); }
+    .result-high { border-left: 3px solid var(--brick); }
+    .result-low { border-left: 3px solid var(--ink); }
     .result-banner .kicker {
-        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
-        text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;
+        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.4rem;
     }
-    .result-banner h2 { font-size: 1.7rem; font-weight: 700; margin: 0 0 0.4rem 0; }
-    .result-high h2 { color: var(--danger); }
-    .result-low h2 { color: var(--success); }
-    .result-banner p { margin: 0; color: var(--text-muted); max-width: 640px; }
+    .result-banner h2 {
+        font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; text-transform: uppercase;
+        letter-spacing: 0.01em;
+    }
+    .result-high h2 { color: var(--brick); }
+    .result-low h2 { color: var(--ink); }
+    .result-banner p { margin: 0; color: var(--ink-muted); max-width: 640px; font-family: 'Inter', sans-serif; }
 
     /* Gauge */
     .gauge-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
@@ -260,14 +274,14 @@ st.markdown(
         border: 1px solid var(--border);
     }
     .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 600; }
-    .gauge-label { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
+    .gauge-label { font-size: 0.65rem; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
 
     .prob-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; }
     .prob-table td { padding: 0.55rem 0.2rem; }
-    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 6px; height: 8px; width: 100%; overflow: hidden; }
-    .prob-table .bar-fill { height: 8px; border-radius: 6px; }
+    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 2px; height: 8px; width: 100%; overflow: hidden; }
+    .prob-table .bar-fill { height: 8px; border-radius: 2px; }
 
-    .footnote { color: var(--text-muted); font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; }
+    .footnote { color: var(--ink-muted); font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; }
     </style>
     """,
     unsafe_allow_html=True
@@ -280,24 +294,31 @@ st.markdown(
 st.markdown(
     """
     <div class="hero">
-        <div class="hero-badge">◆ Paediatric Screening Model</div>
-        <h1>Appendicitis risk, quantified.</h1>
-        <p>AppendiCheck Kids scores appendicitis likelihood in children from clinical scores,
-        symptoms, blood work and ultrasound findings — a statistical aid to support a clinical
-        decision, never to replace one.</p>
-        <div class="stat-row">
-            <div class="stat-chip">Model <span>Random Forest</span></div>
-            <div class="stat-chip">Accuracy <span>94.87%</span></div>
-            <div class="stat-chip">Macro F1 <span>94.67%</span></div>
-            <div class="stat-chip">Use case <span>Screening only</span></div>
+        <div class="hero-grid">
+            <div class="hero-visual">
+                <svg viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="30" />
+                    <circle cx="100" cy="100" r="55" />
+                    <circle cx="100" cy="100" r="80" class="ring-hi" />
+                    <circle cx="100" cy="100" r="4" fill="#F2F0EC" />
+                </svg>
+            </div>
+            <div class="hero-content">
+                <div class="hero-eyebrow">Paediatric Screening Tool</div>
+                <h1>AppendiCheck<br>Kids</h1>
+                <p>Scores appendicitis likelihood in children from clinical scores, symptoms,
+                blood work and ultrasound findings — a statistical aid to support a clinical
+                decision, never to replace one.</p>
+                <div class="hero-credit">
+                    <div class="who">AppendiCheck Kids<span>Screening support tool</span></div>
+                    <div class="stats">Model <b>Random Forest</b> &nbsp;·&nbsp; Accuracy <b>94.87%</b> &nbsp;·&nbsp; Macro F1 <b>94.67%</b></div>
+                </div>
+            </div>
         </div>
-        <svg class="trend-svg" viewBox="0 0 420 36" preserveAspectRatio="none">
-            <path class="line" d="M0 28 L60 22 L120 26 L180 12 L240 18 L300 6 L360 14 L420 4" />
-            <circle cx="420" cy="4" r="3.5" />
-        </svg>
     </div>
     """,
     unsafe_allow_html=True
+
 )
 
 st.markdown(
@@ -567,7 +588,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#E5645A" if is_high_risk else "#43B876"
+        gauge_color = "#C25C4E" if is_high_risk else "#F2F0EC"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -575,11 +596,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#E5645A" if str(cls).lower() == "appendicitis" else "#43B876"
+            bar_color = "#C25C4E" if str(cls).lower() == "appendicitis" else "#F2F0EC"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#E7ECF7; font-weight:600;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#8892AD;">{pct:.2f}%</td>
+                <td style="width:38%; color:#F2F0EC; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#9A9A96;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
@@ -591,7 +612,7 @@ if predict_clicked:
             f"""
             <div class="section-panel">
                 <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1B2338 0deg);">
+                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1F1F1F 0deg);">
                         <div class="gauge-inner">
                             <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
                             <div class="gauge-label">Appendicitis risk</div>
