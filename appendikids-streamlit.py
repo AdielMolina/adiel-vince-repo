@@ -27,229 +27,300 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --bg-deep: #0A0E1A;
-        --bg-panel: #131A2C;
-        --bg-panel-alt: #1B2338;
-        --border: #2A3350;
-        --text-primary: #E7ECF7;
-        --text-muted: #8892AD;
-        --blue: #5B8DEF;
-        --blue-deep: #3D6FD1;
-        --purple: #8B7CF6;
-        --purple-deep: #6C5CE0;
-        --success: #43B876;
-        --success-tint: #16261F;
-        --danger: #E5645A;
-        --danger-tint: #2A1A1C;
-        --amber: #D9A441;
+        --bg-deep: #0B0B0B;
+        --bg-panel: #161616;
+        --bg-panel-alt: #1F1F1F;
+        --border: #3A3A38;
+        --border-soft: #2A2A28;
+        --ink: #F2F0EC;
+        --ink-muted: #9A9A96;
+        --brick: #C25C4E;
+        --brick-tint: #241A18;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
     .stApp {
-        background: radial-gradient(circle at 10% -10%, #141C36 0%, var(--bg-deep) 45%) fixed;
-        color: var(--text-primary);
+        background:
+            radial-gradient(ellipse 1100px 700px at 12% -8%, rgba(255,255,255,0.045) 0%, transparent 60%),
+            repeating-linear-gradient(135deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+            var(--bg-deep);
+        background-attachment: fixed;
+        color: var(--ink);
     }
 
     #MainMenu, footer, header { visibility: hidden; }
-    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text-primary); }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--ink); }
 
-    /* ---------- Hero ---------- */
+    /* ---------- Hero (split layout, like a portfolio cover) ---------- */
     .hero {
-        padding: 2.4rem 2.6rem 2rem 2.6rem;
-        border-radius: 20px;
-        background:
-            radial-gradient(circle at 90% 0%, rgba(139,124,246,0.16) 0%, transparent 55%),
-            linear-gradient(155deg, #131B32 0%, #0E1424 100%);
         border: 1px solid var(--border);
-        box-shadow: 0 16px 40px rgba(0,0,0,0.35);
         margin-bottom: 1.2rem;
+        overflow: hidden;
     }
-    .hero-badge {
-        display: inline-flex;
+    .hero-grid { display: flex; min-height: 300px; }
+    .hero-visual {
+        flex: 0 0 34%;
+        background: #0E0E0E;
+        position: relative;
+        display: flex;
         align-items: center;
-        gap: 0.4rem;
-        background: var(--bg-panel-alt);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 0.35rem 0.9rem;
+        justify-content: center;
+        border-right: 1px solid var(--border);
+    }
+    .hero-visual svg { width: 92%; height: 82%; }
+    .hero-content {
+        flex: 1;
+        padding: 2.2rem 2.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .hero-eyebrow {
         font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: var(--blue);
-        margin-bottom: 1rem;
+        color: var(--ink-muted);
+        margin-bottom: 0.9rem;
     }
     .hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        line-height: 1.12;
-        margin: 0 0 0.6rem 0;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        line-height: 1.08;
+        margin: 0 0 0.9rem 0;
     }
     .hero p {
-        font-size: 1rem;
-        max-width: 620px;
-        color: var(--text-muted);
-        margin: 0 0 1.2rem 0;
+        font-size: 0.98rem;
+        max-width: 520px;
+        color: var(--ink-muted);
+        margin: 0 0 1.3rem 0;
+        font-family: 'Inter', sans-serif;
     }
-    .stat-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
-    .stat-chip {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
+    .hero-credit {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-top: 1px solid var(--border-soft);
+        padding-top: 0.9rem;
+        margin-top: 0.3rem;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+    .hero-credit .who { font-size: 0.92rem; color: var(--ink); }
+    .hero-credit .who span { display: block; color: var(--ink-muted); font-size: 0.8rem; }
+    .hero-credit .stats {
         font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.82rem;
-        color: var(--text-primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-muted);
+        text-align: right;
     }
-    .stat-chip span { color: var(--blue); font-weight: 600; }
-    .trend-svg { width: 100%; max-width: 420px; height: 36px; opacity: 0.9; }
-    .trend-svg path.line { fill: none; stroke: var(--purple); stroke-width: 2; stroke-linecap: round; }
-    .trend-svg circle { fill: var(--blue); }
+    .hero-credit .stats b { color: var(--ink); }
 
     /* ---------- Disclaimer ---------- */
     .disclaimer-block {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-left: 3px solid var(--amber);
-        border-radius: 10px;
+        border-left: 2px solid var(--ink-muted);
         padding: 0.85rem 1.2rem;
-        color: var(--text-muted);
+        color: var(--ink-muted);
         font-size: 0.88rem;
         margin: 1.1rem 0 1.5rem 0;
     }
-    .disclaimer-block b { color: var(--text-primary); }
+    .disclaimer-block b { color: var(--ink); }
 
     /* ---------- Section titles ---------- */
     .section-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: var(--text-primary);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--ink);
         margin-bottom: 0.15rem;
         display: flex; align-items: center; gap: 0.5rem;
     }
-    .section-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
-    .subsection-divider { height: 1px; background: var(--border); margin: 1.3rem 0 1.1rem 0; }
+    .section-sub { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 1rem; }
+    .subsection-divider { height: 1px; background: var(--border-soft); margin: 1.3rem 0 1.1rem 0; }
 
-    /* Every section container gets the SAME consistent panel treatment.
-       Applied directly to the container's key-class (not a split div) so the
-       background truly wraps every widget inside it. */
+    /* Every section container gets the SAME consistent panel treatment. */
     .st-key-sec_patient, .st-key-sec_symptoms, .st-key-sec_blood, .st-key-sec_ultrasound {
         background: var(--bg-panel) !important;
         border: 1px solid var(--border) !important;
-        border-radius: 16px !important;
-        padding: 1.5rem 1.7rem 1rem 1.7rem !important;
+        border-radius: 2px !important;
+        padding: 1.6rem 1.8rem 1.1rem 1.8rem !important;
         margin-bottom: 1.1rem !important;
     }
     .section-panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem 1.7rem 0.6rem 1.7rem;
+        border-radius: 2px;
+        padding: 1.6rem 1.8rem 0.7rem 1.8rem;
     }
 
     label, .stSlider label, .stSelectbox label {
-        color: var(--text-muted) !important; font-size: 0.83rem !important; font-weight: 500 !important;
+        color: var(--ink-muted) !important; font-size: 0.83rem !important; font-weight: 500 !important;
     }
 
-    .stSlider [data-baseweb="slider"] > div > div { background: var(--blue) !important; }
-    .stSlider [role="slider"] { background-color: var(--purple) !important; border: 3px solid var(--bg-deep) !important; }
+    .stSlider [data-baseweb="slider"] > div > div { background: var(--ink) !important; }
+    .stSlider [role="slider"] { background-color: var(--ink) !important; border: 3px solid var(--bg-deep) !important; }
 
     [data-testid="stSelectbox"] > div > div {
         background-color: var(--bg-panel-alt) !important;
         border-color: var(--border) !important;
-        border-radius: 10px !important;
+        border-radius: 2px !important;
     }
-    [data-testid="stSelectbox"] > div > div * { color: var(--text-primary) !important; fill: var(--text-primary) !important; }
+    [data-testid="stSelectbox"] > div > div,
+    [data-testid="stSelectbox"] > div > div * { color: var(--ink) !important; }
+    /* Dropdown chevron icon: force a visible glyph instead of a blank swatch */
+    [data-testid="stSelectbox"] svg {
+        fill: var(--ink) !important;
+        background: transparent !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stSelectbox"] div:has(> svg) { background: transparent !important; }
+    [data-testid="stSelectbox"] [data-baseweb="icon"] { background: transparent !important; }
     div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
-    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
+    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--ink) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
         background: var(--bg-panel-alt);
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 2px;
         margin-bottom: 1rem;
     }
     [data-testid="stExpander"] summary {
-        color: var(--blue) !important;
+        color: var(--ink) !important;
         font-weight: 600;
         font-size: 0.92rem;
+        display: flex !important;
+        align-items: center;
+        min-height: 2.4rem;
     }
-    [data-testid="stExpander"] summary:hover { color: var(--purple) !important; }
-    [data-testid="stExpander"] p { color: var(--text-primary); font-size: 0.92rem; margin-bottom: 0.5rem; }
-    [data-testid="stExpander"] b { color: var(--blue); }
+    [data-testid="stExpander"] summary svg { fill: var(--ink-muted) !important; }
+    [data-testid="stExpander"] summary:hover { color: var(--brick) !important; }
+    [data-testid="stExpander"] p { color: var(--ink); font-size: 0.92rem; margin-bottom: 0.5rem; }
+    [data-testid="stExpander"] b { color: var(--ink); }
     .glossary-term { margin-bottom: 0.7rem; }
-    .glossary-term b { display: block; color: var(--purple); font-family: 'Space Grotesk', sans-serif; }
-
-    /* ---------- Custom pill selector (replaces st.tabs) ---------- */
-    div[data-testid="stRadio"] > label { display: none; }
-    div[data-testid="stRadio"] > div[role="radiogroup"] {
-        gap: 8px; flex-wrap: wrap; margin-bottom: 0.2rem;
+    .glossary-term b {
+        display: block; color: var(--ink); font-family: 'Playfair Display', serif; font-weight: 700;
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"] {
+
+    /* ---------- Section nav — thumbnail cards, like the portfolio strip ---------- */
+    /* Scoped to .st-key-nav_radio only, so it never collides with the field toggles below. */
+    .st-key-nav_radio div[data-testid="stRadio"] > label { display: none; }
+    .st-key-nav_radio div[data-testid="stRadio"] > div[role="radiogroup"] {
+        gap: 10px; flex-wrap: wrap; margin-bottom: 0.2rem;
+    }
+    .st-key-nav_radio div[data-testid="stRadio"] label[data-baseweb="radio"] {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 0.55rem 1.2rem;
+        border-radius: 2px;
+        padding: 0.7rem 1.3rem;
         display: flex; align-items: center; gap: 0.5rem;
         cursor: pointer;
-        transition: background 0.15s ease, border-color 0.15s ease;
+        transition: border-color 0.15s ease, background 0.15s ease;
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child { display: none; }
-    div[data-testid="stRadio"] label[data-baseweb="radio"] p {
-        margin: 0; font-weight: 600; font-size: 0.92rem; color: var(--text-muted); white-space: nowrap;
+    .st-key-nav_radio div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child { display: none; }
+    .st-key-nav_radio div[data-testid="stRadio"] label[data-baseweb="radio"] p {
+        margin: 0; font-weight: 600; font-size: 0.88rem; color: var(--ink-muted); white-space: nowrap;
+        text-transform: uppercase; letter-spacing: 0.04em;
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
-        background: linear-gradient(135deg, var(--blue-deep), var(--purple-deep));
-        border-color: var(--purple);
+    .st-key-nav_radio div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
+        background: var(--bg-panel-alt);
+        border: 1px solid var(--ink);
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: white; }
+    .st-key-nav_radio div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: var(--ink); }
 
-    /* ---------- Button ---------- */
+    /* ---------- Field toggle — replaces the yes/no & female/male dropdowns entirely ---------- */
+    /* Every binary field is wrapped in st.container(key="tg_<name>"), matched here by substring. */
+    [class*="st-key-tg_"] div[data-testid="stRadio"] > div[role="radiogroup"] {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 0.2rem;
+    }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"] {
+        flex: 1;
+        justify-content: center;
+        margin: 0;
+        padding: 0.6rem 0.5rem;
+        border-radius: 0;
+        border-right: 1px solid var(--border);
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"]:last-of-type { border-right: none; }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child { display: none; }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"] p {
+        margin: 0; font-weight: 700; font-size: 0.82rem; color: var(--ink-muted);
+        text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
+        background: var(--ink);
+    }
+    [class*="st-key-tg_"] div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p {
+        color: var(--bg-deep);
+    }
+
+    /* Permanent plain-language caption under every field — no hovering required */
+    .field-caption {
+        font-size: 0.78rem;
+        color: var(--ink-muted);
+        margin-top: 0.4rem;
+        margin-bottom: 0.1rem;
+        line-height: 1.4;
+    }
+
+    /* ---------- Button — ghost outline, inverts on hover ---------- */
     div.stButton > button {
         width: 100%;
         height: 3.2rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--blue) 0%, var(--purple-deep) 100%);
-        color: white;
+        border-radius: 2px;
+        background: transparent;
+        color: var(--ink);
         font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
-        letter-spacing: 0.01em;
-        border: none;
-        font-size: 1.02rem;
-        box-shadow: 0 10px 26px rgba(91, 141, 239, 0.25);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        border: 1px solid var(--ink);
+        transition: background 0.15s ease, color 0.15s ease;
     }
     div.stButton > button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 30px rgba(139, 124, 246, 0.35);
-        color: white;
+        background: var(--ink);
+        color: var(--bg-deep);
+        border-color: var(--ink);
     }
 
     /* ---------- Result banner ---------- */
     .result-banner {
-        padding: 1.6rem 1.9rem;
-        border-radius: 16px;
+        padding: 1.7rem 2rem;
+        border-radius: 2px;
         margin-bottom: 1rem;
         background: var(--bg-panel);
         border: 1px solid var(--border);
     }
-    .result-high { border-left: 4px solid var(--danger); }
-    .result-low { border-left: 4px solid var(--success); }
+    .result-high { border-left: 3px solid var(--brick); }
+    .result-low { border-left: 3px solid var(--ink); }
     .result-banner .kicker {
-        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
-        text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;
+        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.4rem;
     }
-    .result-banner h2 { font-size: 1.7rem; font-weight: 700; margin: 0 0 0.4rem 0; }
-    .result-high h2 { color: var(--danger); }
-    .result-low h2 { color: var(--success); }
-    .result-banner p { margin: 0; color: var(--text-muted); max-width: 640px; }
+    .result-banner h2 {
+        font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; text-transform: uppercase;
+        letter-spacing: 0.01em;
+    }
+    .result-high h2 { color: var(--brick); }
+    .result-low h2 { color: var(--ink); }
+    .result-banner p { margin: 0; color: var(--ink-muted); max-width: 640px; font-family: 'Inter', sans-serif; }
 
     /* Gauge */
     .gauge-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
@@ -260,14 +331,14 @@ st.markdown(
         border: 1px solid var(--border);
     }
     .gauge-pct { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 600; }
-    .gauge-label { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
+    .gauge-label { font-size: 0.65rem; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.15rem; }
 
     .prob-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; }
     .prob-table td { padding: 0.55rem 0.2rem; }
-    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 6px; height: 8px; width: 100%; overflow: hidden; }
-    .prob-table .bar-fill { height: 8px; border-radius: 6px; }
+    .prob-table .bar-bg { background: var(--bg-panel-alt); border-radius: 2px; height: 8px; width: 100%; overflow: hidden; }
+    .prob-table .bar-fill { height: 8px; border-radius: 2px; }
 
-    .footnote { color: var(--text-muted); font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; }
+    .footnote { color: var(--ink-muted); font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; }
     </style>
     """,
     unsafe_allow_html=True
@@ -280,24 +351,43 @@ st.markdown(
 st.markdown(
     """
     <div class="hero">
-        <div class="hero-badge">◆ Paediatric Screening Model</div>
-        <h1>Appendicitis risk, quantified.</h1>
-        <p>AppendiCheck Kids scores appendicitis likelihood in children from clinical scores,
-        symptoms, blood work and ultrasound findings — a statistical aid to support a clinical
-        decision, never to replace one.</p>
-        <div class="stat-row">
-            <div class="stat-chip">Model <span>Random Forest</span></div>
-            <div class="stat-chip">Accuracy <span>94.87%</span></div>
-            <div class="stat-chip">Macro F1 <span>94.67%</span></div>
-            <div class="stat-chip">Use case <span>Screening only</span></div>
+        <div class="hero-grid">
+            <div class="hero-visual">
+                <svg viewBox="0 0 220 200">
+                    <!-- Bars: Baseline / Logistic Regression / Random Forest (tuned) macro F1 -->
+                    <text x="14" y="14" font-family="IBM Plex Mono" font-size="8" fill="#6A6A66" letter-spacing="1">MACRO F1-SCORE</text>
+
+                    <rect x="14" y="150" width="34" height="18" fill="#2A2A28" />
+                    <text x="14" y="145" font-family="IBM Plex Mono" font-size="9" fill="#6A6A66">0.37</text>
+                    <text x="14" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#6A6A66">BASELINE</text>
+
+                    <rect x="80" y="103" width="34" height="65" fill="#4A4A46" />
+                    <text x="80" y="98" font-family="IBM Plex Mono" font-size="9" fill="#9A9A96">0.91</text>
+                    <text x="72" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#9A9A96">LOG. REG</text>
+
+                    <rect x="146" y="92" width="34" height="76" fill="#F2F0EC" />
+                    <text x="146" y="87" font-family="IBM Plex Mono" font-size="9" fill="#F2F0EC">0.95</text>
+                    <text x="140" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#F2F0EC">RANDOM FOREST</text>
+
+                    <line x1="10" y1="168" x2="210" y2="168" stroke="#3A3A38" stroke-width="1" />
+                </svg>
+            </div>
+            <div class="hero-content">
+                <div class="hero-eyebrow">Paediatric Screening Tool</div>
+                <h1>AppendiCheck<br>Kids</h1>
+                <p>Scores appendicitis likelihood in children from clinical scores, symptoms,
+                blood work and ultrasound findings — a statistical aid to support a clinical
+                decision, never to replace one.</p>
+                <div class="hero-credit">
+                    <div class="who">AppendiCheck Kids<span>Screening support tool</span></div>
+                    <div class="stats">Model <b>Random Forest</b> &nbsp;·&nbsp; Accuracy <b>94.87%</b> &nbsp;·&nbsp; Macro F1 <b>94.67%</b></div>
+                </div>
+            </div>
         </div>
-        <svg class="trend-svg" viewBox="0 0 420 36" preserveAspectRatio="none">
-            <path class="line" d="M0 28 L60 22 L120 26 L180 12 L240 18 L300 6 L360 14 L420 4" />
-            <circle cx="420" cy="4" r="3.5" />
-        </svg>
     </div>
     """,
     unsafe_allow_html=True
+
 )
 
 st.markdown(
@@ -317,6 +407,22 @@ def glossary(title, terms):
                 unsafe_allow_html=True
             )
 
+
+def field_caption(text):
+    """A permanent, always-visible plain-language explanation under a field —
+    more accessible than a hover-only tooltip for readers who may not think to hover/tap it."""
+    st.markdown(f'<div class="field-caption">{text}</div>', unsafe_allow_html=True)
+
+
+def toggle(field_key, label, options, caption_text):
+    """A two-option segmented toggle (e.g. FEMALE / MALE, NO / YES) that replaces
+    st.selectbox for every binary field — sidesteps the dropdown-chevron rendering
+    bug entirely since there's no native dropdown involved."""
+    with st.container(key=f"tg_{field_key}"):
+        value = st.radio(label, options, horizontal=True, key=f"radio_{field_key}")
+        field_caption(caption_text)
+    return value
+
 # =========================
 # Inputs
 # =========================
@@ -324,9 +430,10 @@ def glossary(title, terms):
 st.markdown("## Patient Assessment")
 
 SECTION_OPTIONS = ["👤 Patient Info", "🩻 Symptoms", "🧪 Blood Tests", "🔍 Ultrasound"]
-active_section = st.radio(
-    "Section", SECTION_OPTIONS, horizontal=True, label_visibility="collapsed", key="active_section"
-)
+with st.container(key="nav_radio"):
+    active_section = st.radio(
+        "Section", SECTION_OPTIONS, horizontal=True, label_visibility="collapsed", key="active_section"
+    )
 
 # Dynamically hide non-active section panels, keeping all widgets mounted so
 # values persist across selections (mirrors how st.tabs keeps every tab alive).
@@ -339,16 +446,14 @@ with st.container(key="sec_patient"):
     st.markdown('<div class="section-title">Demographics</div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
-        age = st.slider("Age (years)", 0.0, 18.0, 10.0, 0.1,
-                         help="How old the child is, in years.")
+        age = st.slider("Age (years)", 0.0, 18.0, 10.0, 0.1)
+        field_caption("How old the child is, in years.")
     with col2:
-        sex = st.selectbox("Sex", ["female", "male"],
-                            help="Whether the child is female or male.")
+        sex = toggle("sex", "Sex", ["female", "male"], "Whether the child is female or male.")
     with col3:
-        bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1,
-                         help="Body Mass Index — a number worked out from height and weight "
-                              "that shows if a child's weight is in a healthy range for their height. "
-                              "A doctor, nurse, or clinic scale can measure this.")
+        bmi = st.slider("BMI (kg/m²)", 5.0, 40.0, 18.0, 0.1)
+        field_caption("Body Mass Index — a number worked out from height and weight that shows "
+                      "if a child's weight is in a healthy range for their height.")
 
     st.markdown('<div class="subsection-divider"></div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Clinical Scores</div>', unsafe_allow_html=True)
@@ -369,13 +474,13 @@ with st.container(key="sec_patient"):
 
     col4, col5 = st.columns(2)
     with col4:
-        alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5,
-                                    help="A 0–10 score from a doctor's exam and blood test. "
-                                         "Higher = more likely to be appendicitis.")
+        alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5)
+        field_caption("A 0–10 score from a doctor's exam and blood test. Higher = more likely "
+                      "to be appendicitis.")
     with col5:
-        paediatric_score = st.slider("Paediatric Appendicitis Score", 0.0, 10.0, 5.0, 0.5,
-                                      help="Like the Alvarado Score, but made for children. "
-                                           "Higher = more likely to be appendicitis.")
+        paediatric_score = st.slider("Paediatric Appendicitis Score", 0.0, 10.0, 5.0, 0.5)
+        field_caption("Like the Alvarado Score, but made for children. Higher = more likely "
+                      "to be appendicitis.")
 
 with st.container(key="sec_symptoms"):
     st.markdown('<div class="section-title">Reported Symptoms</div>', unsafe_allow_html=True)
@@ -401,23 +506,23 @@ with st.container(key="sec_symptoms"):
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        lower_right_pain = st.selectbox("Lower Right Abdominal Pain", ["no", "yes"],
-                                         help="Pain on the lower right side of the belly.")
+        lower_right_pain = toggle("lrp", "Lower Right Abdominal Pain", ["no", "yes"],
+                                   "Pain on the lower right side of the belly.")
     with col2:
-        migratory_pain = st.selectbox("Migratory Pain", ["no", "yes"],
-                                       help="Pain that started near the belly button and moved "
-                                            "to the lower right side.")
+        migratory_pain = toggle("migratory", "Migratory Pain", ["no", "yes"],
+                                 "Pain that started near the belly button and moved "
+                                 "to the lower right side.")
     with col3:
-        nausea = st.selectbox("Nausea", ["no", "yes"],
-                               help="Feeling like you might vomit, even without actually vomiting.")
+        nausea = toggle("nausea", "Nausea", ["no", "yes"],
+                         "Feeling like you might vomit, even without actually vomiting.")
     col4, col5 = st.columns(2)
     with col4:
-        loss_of_appetite = st.selectbox("Loss of Appetite", ["no", "yes"],
-                                         help="Not wanting to eat, even favourite foods.")
+        loss_of_appetite = toggle("appetite", "Loss of Appetite", ["no", "yes"],
+                                   "Not wanting to eat, even favourite foods.")
     with col5:
-        peritonitis = st.selectbox("Peritonitis", ["no", "yes"],
-                                    help="Belly hurts more when pressure is released quickly than "
-                                         "when it's pressed — usually checked by a doctor.")
+        peritonitis = toggle("peritonitis", "Peritonitis", ["no", "yes"],
+                              "Belly hurts more when pressure is released quickly than "
+                              "when it's pressed — usually checked by a doctor.")
 
 with st.container(key="sec_blood"):
     st.markdown('<div class="section-title">Blood Test Results</div>', unsafe_allow_html=True)
@@ -439,17 +544,17 @@ with st.container(key="sec_blood"):
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        wbc_count = st.slider("WBC Count (×10⁹/L)", 0.0, 40.0, 10.0, 0.1,
-                               help="White blood cells fight infection. Higher usually means the "
-                                    "body may be fighting an infection.")
+        wbc_count = st.slider("WBC Count (×10⁹/L)", 0.0, 40.0, 10.0, 0.1)
+        field_caption("White blood cells fight infection. Higher usually means the body may "
+                      "be fighting an infection.")
     with col2:
-        crp = st.slider("CRP (mg/L)", 0.0, 300.0, 10.0, 0.1,
-                         help="Rises when there's swelling or infection in the body. "
-                              "Higher = more inflammation.")
+        crp = st.slider("CRP (mg/L)", 0.0, 300.0, 10.0, 0.1)
+        field_caption("Rises when there's swelling or infection in the body. "
+                      "Higher = more inflammation.")
     with col3:
-        neutrophil_percentage = st.slider("Neutrophil Percentage (%)", 0.0, 100.0, 60.0, 0.5,
-                                           help="A type of white blood cell that fights bacteria. "
-                                                "Higher often means an active infection.")
+        neutrophil_percentage = st.slider("Neutrophil Percentage (%)", 0.0, 100.0, 60.0, 0.5)
+        field_caption("A type of white blood cell that fights bacteria. Higher often means "
+                      "an active infection.")
 
 with st.container(key="sec_ultrasound"):
     st.markdown('<div class="section-title">Ultrasound Findings</div>', unsafe_allow_html=True)
@@ -472,16 +577,16 @@ with st.container(key="sec_ultrasound"):
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        appendix_on_us = st.selectbox("Appendix Seen on Ultrasound", ["no", "yes"],
-                                       help="Whether the appendix could be clearly seen on the scan.")
+        appendix_on_us = toggle("appendix_us", "Appendix Seen on Ultrasound", ["no", "yes"],
+                                 "Whether the appendix could be clearly seen on the scan.")
     with col2:
-        appendix_diameter = st.slider("Appendix Diameter (mm)", 0.0, 20.0, 6.0, 0.1,
-                                       help="How wide the appendix measures on the scan. Wider "
-                                            "(usually over 6–7mm) can suggest appendicitis.")
+        appendix_diameter = st.slider("Appendix Diameter (mm)", 0.0, 20.0, 6.0, 0.1)
+        field_caption("How wide the appendix measures on the scan. Wider (usually over 6–7mm) "
+                      "can suggest appendicitis.")
     with col3:
-        free_fluids = st.selectbox("Free Fluids", ["no", "yes"],
-                                    help="Extra fluid seen in the belly on the scan — can be a "
-                                         "sign of inflammation.")
+        free_fluids = toggle("free_fluids", "Free Fluids", ["no", "yes"],
+                              "Extra fluid seen in the belly on the scan — can be a sign "
+                              "of inflammation.")
 
 # =========================
 # Prediction
@@ -567,7 +672,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#E5645A" if is_high_risk else "#43B876"
+        gauge_color = "#C25C4E" if is_high_risk else "#F2F0EC"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -575,11 +680,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#E5645A" if str(cls).lower() == "appendicitis" else "#43B876"
+            bar_color = "#C25C4E" if str(cls).lower() == "appendicitis" else "#F2F0EC"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#E7ECF7; font-weight:600;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#8892AD;">{pct:.2f}%</td>
+                <td style="width:38%; color:#F2F0EC; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#9A9A96;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
@@ -591,7 +696,7 @@ if predict_clicked:
             f"""
             <div class="section-panel">
                 <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1B2338 0deg);">
+                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1F1F1F 0deg);">
                         <div class="gauge-inner">
                             <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
                             <div class="gauge-label">Appendicitis risk</div>
