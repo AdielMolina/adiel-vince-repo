@@ -175,6 +175,28 @@ st.markdown(
     div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
     div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
+    
+    /* Fix selectbox white square icon */
+    [data-testid="stSelectbox"] div[data-baseweb="select"] svg {
+        display: none !important;
+    }
+
+    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+        position: relative;
+        padding-right: 2.4rem !important;   
+    }
+
+    [data-testid="stSelectbox"] div[data-baseweb="select"] > div::after {
+        content: "▾";
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--blue);
+        font-size: 1.1rem;
+        font-weight: 700;
+        pointer-events: none;
+    }    
 
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
@@ -218,6 +240,7 @@ st.markdown(
     }
     div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: white; }
 
+    
     /* ---------- Button ---------- */
     div.stButton > button {
         width: 100%;
