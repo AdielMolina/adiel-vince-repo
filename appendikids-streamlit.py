@@ -171,38 +171,18 @@ st.markdown(
         border-color: var(--border) !important;
         border-radius: 10px !important;
     }
-    [data-testid="stSelectbox"] > div > div * { color: var(--text-primary) !important; fill: var(--text-primary) !important; }
+    [data-testid="stSelectbox"] > div > div * {
+    color: var(--text-primary) !important;
+    }
+
+    [data-testid="stSelectbox"] svg {
+        fill: var(--blue) !important;
+        color: var(--blue) !important;
+    }
     div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
     div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
-    /* Fix selectbox white square icon using CSS triangle, not text */
-    [data-testid="stSelectbox"] div[data-baseweb="select"] {
-        position: relative !important;
-    }
-
-    [data-testid="stSelectbox"] div[data-baseweb="select"] svg {
-        display: none !important;
-    }
-
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        padding-right: 2.6rem !important;
-    }
-
-    [data-testid="stSelectbox"] div[data-baseweb="select"]::after {
-        content: "";
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 6px solid var(--blue);
-        pointer-events: none;
-        z-index: 10;
-    }
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
         background: var(--bg-panel-alt);
@@ -681,24 +661,20 @@ if predict_clicked:
             """
 
         st.markdown("### Prediction Probability")
-        st.markdown(
-            f"""
-            <div class="section-panel">
-                <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1B2338 0deg);">
-                        <div class="gauge-inner">
-                            <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
-                            <div class="gauge-label">Appendicitis risk</div>
-                        </div>
-                    </div>
-                    <table class="prob-table" style="flex:1; min-width:260px;">
-                        {rows_html}
-                    </table>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+
+        prob_col1, prob_col2 = st.columns([1, 2])
+
+        with prob_col1:
+            st.metric(
+                label="Appendicitis Risk",
+                value=f"{gauge_pct:.1f}%"
+            )
+
+        with prob_col2:
+            for cls, prob in zip(classes, probabilities):
+                pct = float(prob) * 100
+                st.write(f"**{cls}** — {pct:.2f}%")
+                st.progress(float(prob))
         with st.expander("What does this result mean?"):
             st.write(
                 "A higher appendicitis probability means the model found patterns similar to appendicitis cases "
