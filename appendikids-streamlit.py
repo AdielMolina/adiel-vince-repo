@@ -175,29 +175,34 @@ st.markdown(
     div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
     div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--text-primary) !important; }
     div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
-    
-    /* Fix selectbox white square icon */
+
+    /* Fix selectbox white square icon using CSS triangle, not text */
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {
+        position: relative !important;
+    }
+
     [data-testid="stSelectbox"] div[data-baseweb="select"] svg {
         display: none !important;
     }
 
     [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        position: relative;
-        padding-right: 2.4rem !important;   
+        padding-right: 2.6rem !important;
     }
 
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div::after {
-        content: "▾";
+    [data-testid="stSelectbox"] div[data-baseweb="select"]::after {
+        content: "";
         position: absolute;
-        right: 14px;
+        right: 16px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--blue);
-        font-size: 1.1rem;
-        font-weight: 700;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid var(--blue);
         pointer-events: none;
-    }    
-
+        z-index: 10;
+    }
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
         background: var(--bg-panel-alt);
