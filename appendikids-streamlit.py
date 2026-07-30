@@ -30,24 +30,21 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
     :root {
-        --bg-page: #F1EEE6;
-        --bg-panel: #FCFBF8;
-        --bg-panel-alt: #EFECE3;
-        --border: #D6D2C6;
-        --border-soft: #E4E1D6;
-        --ink: #17161A;
-        --ink-muted: #706C63;
-        --brick: #A8453A;
-        --brick-tint: #F3E2DE;
-        --panel-black: #0B0B0B;
-        --on-black: #F2F0EC;
-        --on-black-muted: #9A9A96;
+        --bg-deep: #0B0B0B;
+        --bg-panel: #161616;
+        --bg-panel-alt: #1F1F1F;
+        --border: #3A3A38;
+        --border-soft: #2A2A28;
+        --ink: #F2F0EC;
+        --ink-muted: #9A9A96;
+        --brick: #C25C4E;
+        --brick-tint: #241A18;
     }
 
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
     .stApp {
-        background: var(--bg-page);
+        background: var(--bg-deep);
         color: var(--ink);
     }
 
@@ -62,18 +59,17 @@ st.markdown(
     }
     .hero-grid { display: flex; min-height: 300px; }
     .hero-visual {
-        flex: 0 0 36%;
-        background: var(--panel-black);
+        flex: 0 0 34%;
+        background: #0E0E0E;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1.5rem;
+        border-right: 1px solid var(--border);
     }
-    .hero-visual svg { width: 100%; height: 100%; }
+    .hero-visual svg { width: 92%; height: 82%; }
     .hero-content {
         flex: 1;
-        background: var(--bg-panel);
         padding: 2.2rem 2.4rem;
         display: flex;
         flex-direction: column;
@@ -167,9 +163,8 @@ st.markdown(
     }
 
     .stSlider [data-baseweb="slider"] > div > div { background: var(--ink) !important; }
-    .stSlider [role="slider"] { background-color: var(--ink) !important; border: 3px solid var(--bg-page) !important; }
+    .stSlider [role="slider"] { background-color: var(--ink) !important; border: 3px solid var(--bg-deep) !important; }
 
-    /* Selectbox: closed field */
     [data-testid="stSelectbox"] > div > div {
         background-color: var(--bg-panel-alt) !important;
         border-color: var(--border) !important;
@@ -185,14 +180,13 @@ st.markdown(
     }
     [data-testid="stSelectbox"] div:has(> svg) { background: transparent !important; }
     [data-testid="stSelectbox"] [data-baseweb="icon"] { background: transparent !important; }
-
-    div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel) !important; border: 1px solid var(--border) !important; }
-    div[data-baseweb="popover"] li { background-color: var(--bg-panel) !important; color: var(--ink) !important; }
-    div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel-alt) !important; }
+    div[data-baseweb="popover"] div[data-baseweb="menu"] { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border) !important; }
+    div[data-baseweb="popover"] li { background-color: var(--bg-panel-alt) !important; color: var(--ink) !important; }
+    div[data-baseweb="popover"] li:hover { background-color: var(--bg-panel) !important; }
 
     /* ---------- Expander (used for plain-language glossary) ---------- */
     [data-testid="stExpander"] {
-        background: var(--bg-panel);
+        background: var(--bg-panel-alt);
         border: 1px solid var(--border);
         border-radius: 2px;
         margin-bottom: 1rem;
@@ -234,10 +228,10 @@ st.markdown(
         text-transform: uppercase; letter-spacing: 0.04em;
     }
     div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
-        background: var(--ink);
+        background: var(--bg-panel-alt);
         border: 1px solid var(--ink);
     }
-    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: var(--bg-page); }
+    div[data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) p { color: var(--ink); }
 
     /* ---------- Button — ghost outline, inverts on hover ---------- */
     div.stButton > button {
@@ -256,7 +250,7 @@ st.markdown(
     }
     div.stButton > button:hover {
         background: var(--ink);
-        color: var(--bg-page);
+        color: var(--bg-deep);
         border-color: var(--ink);
     }
 
@@ -268,7 +262,7 @@ st.markdown(
         background: var(--bg-panel);
         border: 1px solid var(--border);
     }
-    .result-high { border-left: 3px solid var(--brick); background: var(--brick-tint); }
+    .result-high { border-left: 3px solid var(--brick); }
     .result-low { border-left: 3px solid var(--ink); }
     .result-banner .kicker {
         font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em;
@@ -286,7 +280,7 @@ st.markdown(
     .gauge-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
     .gauge-outer { border-radius: 50%; width: 164px; height: 164px; display: flex; align-items: center; justify-content: center; }
     .gauge-inner {
-        border-radius: 50%; width: 126px; height: 126px; background: var(--bg-panel);
+        border-radius: 50%; width: 126px; height: 126px; background: var(--bg-deep);
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         border: 1px solid var(--border);
     }
@@ -315,15 +309,15 @@ st.markdown(
             <div class="hero-visual">
                 <svg viewBox="0 0 220 200">
                     <!-- Bars: Baseline / Logistic Regression / Random Forest (tuned) macro F1 -->
-                    <text x="14" y="14" font-family="IBM Plex Mono" font-size="8" fill="#9A9A96" letter-spacing="1">MACRO F1-SCORE</text>
+                    <text x="14" y="14" font-family="IBM Plex Mono" font-size="8" fill="#6A6A66" letter-spacing="1">MACRO F1-SCORE</text>
 
-                    <rect x="14" y="150" width="34" height="18" fill="#3A3A38" />
-                    <text x="14" y="145" font-family="IBM Plex Mono" font-size="9" fill="#9A9A96">0.37</text>
-                    <text x="14" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#706C63">BASELINE</text>
+                    <rect x="14" y="150" width="34" height="18" fill="#2A2A28" />
+                    <text x="14" y="145" font-family="IBM Plex Mono" font-size="9" fill="#6A6A66">0.37</text>
+                    <text x="14" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#6A6A66">BASELINE</text>
 
-                    <rect x="80" y="103" width="34" height="65" fill="#5A5A56" />
+                    <rect x="80" y="103" width="34" height="65" fill="#4A4A46" />
                     <text x="80" y="98" font-family="IBM Plex Mono" font-size="9" fill="#9A9A96">0.91</text>
-                    <text x="72" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#706C63">LOG. REG</text>
+                    <text x="72" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#9A9A96">LOG. REG</text>
 
                     <rect x="146" y="92" width="34" height="76" fill="#F2F0EC" />
                     <text x="146" y="87" font-family="IBM Plex Mono" font-size="9" fill="#F2F0EC">0.95</text>
@@ -617,7 +611,7 @@ if predict_clicked:
 
         classes = list(classes)
 
-        gauge_color = "#A8453A" if is_high_risk else "#17161A"
+        gauge_color = "#C25C4E" if is_high_risk else "#F2F0EC"
         gauge_pct = 0.0
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
@@ -625,11 +619,11 @@ if predict_clicked:
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
-            bar_color = "#A8453A" if str(cls).lower() == "appendicitis" else "#17161A"
+            bar_color = "#C25C4E" if str(cls).lower() == "appendicitis" else "#F2F0EC"
             rows_html += f"""
             <tr>
-                <td style="width:38%; color:#17161A; font-weight:600;">{cls}</td>
-                <td style="width:12%; text-align:right; color:#706C63;">{pct:.2f}%</td>
+                <td style="width:38%; color:#F2F0EC; font-weight:600;">{cls}</td>
+                <td style="width:12%; text-align:right; color:#9A9A96;">{pct:.2f}%</td>
                 <td style="width:50%;">
                     <div class="bar-bg"><div class="bar-fill" style="width:{pct:.1f}%; background:{bar_color};"></div></div>
                 </td>
@@ -641,7 +635,7 @@ if predict_clicked:
             f"""
             <div class="section-panel">
                 <div class="gauge-wrap">
-                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #EFECE3 0deg);">
+                    <div class="gauge-outer" style="background: conic-gradient({gauge_color} {gauge_pct * 3.6:.1f}deg, #1F1F1F 0deg);">
                         <div class="gauge-inner">
                             <div class="gauge-pct" style="color:{gauge_color};">{gauge_pct:.1f}%</div>
                             <div class="gauge-label">Appendicitis risk</div>
