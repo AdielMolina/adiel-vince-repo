@@ -1,6 +1,6 @@
 """
 AppendiCheck Kids — Paediatric Appendicitis Screening Tool
-A single-file Streamlit app with an editorial "portfolio" aesthetic.
+A single-file Streamlit app with an editorial "portfolio" aesthetic (cream/light theme).
 
 Run:
     pip install streamlit pandas numpy joblib scikit-learn
@@ -28,7 +28,7 @@ st.set_page_config(
 )
 
 # =========================
-# Design tokens + global style
+# Design tokens + global style (forces light/cream theme)
 # =========================
 st.markdown(
     """
@@ -36,22 +36,30 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
     :root {
-        --cream: #F6F3EC;
+        --cream: #F5F2ED;
         --cream-deep: #EFEAE0;
         --card: #FFFFFF;
         --ink: #0B0B0B;
         --ink-soft: #2A2A28;
-        --muted: #7C7C77;
+        --muted: #777777;
         --line: #0B0B0B;
         --line-soft: #D8D3C9;
         --brick: #C25C4E;
-        --win: #E4E0D8;
+        --win: #EBEBEB;
     }
 
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; background: var(--cream); }
-    .stApp { background: var(--cream); color: var(--ink); }
+    /* Force the cream/light theme regardless of Streamlit's saved theme preference */
+    html, body, .stApp, [data-testid="stAppViewContainer"],
+    [data-testid="stMainBlockContainer"], section[data-testid="stMain"],
+    [data-testid="stHeader"], [data-testid="stBottomBlock"],
+    .block-container, [data-testid="stVerticalBlock"] {
+        background: var(--cream) !important;
+        color: var(--ink) !important;
+    }
+    [class*="css"] { font-family: 'Inter', sans-serif; }
     #MainMenu, footer, header { visibility: hidden; }
-    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--ink); }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--ink) !important; }
+    .stMarkdown p { color: var(--ink); }
 
     .wrap { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
 
@@ -68,9 +76,9 @@ st.markdown(
     /* ---------- Hero ---------- */
     .hero { border:1px solid var(--ink); background: var(--card); overflow:hidden; }
     .hero-grid { display:flex; min-height:340px; }
-    .hero-visual { flex:0 0 36%; background:#0B0B0B; border-right:1px solid var(--ink);
+    .hero-visual { flex:0 0 36%; background:#000000; border-right:1px solid var(--ink);
                    display:flex; align-items:stretch; justify-content:center; min-height:300px; }
-    .hero-content { flex:1; padding:2.4rem 2.6rem; display:flex; flex-direction:column; justify-content:center; }
+    .hero-content { flex:1; padding:2.4rem 2.6rem; display:flex; flex-direction:column; justify-content:center; background: var(--card); }
     .eyebrow { font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.18em;
                text-transform:uppercase; color:var(--muted); margin-bottom:1rem; }
     .hero h1 { font-size:3.4rem; font-weight:800; line-height:1.02; letter-spacing:.01em;
@@ -78,7 +86,7 @@ st.markdown(
     .hero p { font-size:.98rem; max-width:520px; color:var(--muted); margin:0 0 1.4rem 0; }
     .hero-credit { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:.6rem;
                    border-top:1px solid var(--line-soft); padding-top:1rem; margin-top:.4rem; }
-    .hero-credit .who { font-size:.92rem; font-weight:500; }
+    .hero-credit .who { font-size:.92rem; font-weight:500; color: var(--ink); }
     .hero-credit .who span { display:block; color:var(--muted); font-size:.8rem; font-weight:400; }
     .hero-credit .stats { font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.04em;
                           color:var(--muted); text-align:right; }
@@ -107,7 +115,7 @@ st.markdown(
     .st-key-sec_patient, .st-key-sec_symptoms, .st-key-sec_blood, .st-key-sec_ultrasound {
         background:var(--card) !important; border:1px solid var(--ink) !important; border-radius:0 !important;
         padding:1.8rem 2rem 1.2rem 2rem !important; margin-bottom:1.1rem !important; }
-    .section-title { font-family:'Playfair Display',serif; font-weight:700; font-size:1.3rem; margin-bottom:.15rem; }
+    .section-title { font-family:'Playfair Display',serif; font-weight:700; font-size:1.3rem; margin-bottom:.15rem; color: var(--ink); }
     .section-sub { font-size:.85rem; color:var(--muted); margin-bottom:1.2rem; }
     .subsection-divider { height:1px; background:var(--line-soft); margin:1.4rem 0 1.2rem 0; }
 
@@ -136,7 +144,7 @@ st.markdown(
     .result-high { border-left-color:var(--brick); }
     .result-banner .kicker { font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.12em;
                              text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; }
-    .result-banner h2 { font-size:2rem; font-weight:800; margin:0 0 .6rem 0; text-transform:uppercase; }
+    .result-banner h2 { font-size:2rem; font-weight:800; margin:0 0 .6rem 0; text-transform:uppercase; color: var(--ink); }
     .result-high h2 { color:var(--brick); }
     .result-banner p { margin:0; color:var(--muted); max-width:640px; }
     .risk-badge { display:inline-block; padding:.3rem .7rem; font-size:.7rem; font-weight:700;
@@ -151,18 +159,18 @@ st.markdown(
     .gauge-pct { font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:600; }
     .gauge-label { font-size:.62rem; color:var(--muted); letter-spacing:.05em; text-transform:uppercase; margin-top:.2rem; }
     .prob-row { display:flex; align-items:center; gap:1rem; padding:.5rem 0; }
-    .prob-row .lbl { width:160px; font-size:.85rem; font-weight:600; }
+    .prob-row .lbl { width:160px; font-size:.85rem; font-weight:600; color: var(--ink); }
     .prob-row .pct { width:56px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:.82rem; color:var(--muted); }
     .prob-row .bar-bg { flex:1; height:8px; background:var(--cream-deep); overflow:hidden; }
     .prob-row .bar-fill { height:8px; }
 
     .factors { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
-    .factor { display:flex; gap:.6rem; border:1px solid var(--line-soft); padding:.7rem; }
+    .factor { display:flex; gap:.6rem; border:1px solid var(--line-soft); padding:.7rem; background: var(--card); }
     .factor .dot { width:8px; height:8px; border-radius:50%; margin-top:.35rem; flex:0 0 auto; }
     .factor .f-up { background:var(--brick); }
     .factor .f-down { background:rgba(11,11,11,.4); }
     .factor .f-neu { background:var(--muted); }
-    .factor p { margin:0; font-size:.85rem; }
+    .factor p { margin:0; font-size:.85rem; color: var(--ink); }
     .factor .eff { font-family:'IBM Plex Mono',monospace; font-size:.62rem; text-transform:uppercase; color:var(--muted); }
 
     .footnote { color:var(--muted); font-size:.78rem; font-family:'IBM Plex Mono',monospace; margin-top:1.5rem; }
@@ -263,9 +271,9 @@ st.markdown(
             <rect x="80" y="103" width="34" height="65" fill="#5A5A56" />
             <text x="80" y="98" font-family="IBM Plex Mono" font-size="9" fill="#9A9A96">0.91</text>
             <text x="72" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#9A9A96">LOG. REG</text>
-            <rect x="146" y="92" width="34" height="76" fill="#F6F3EC" />
-            <text x="146" y="87" font-family="IBM Plex Mono" font-size="9" fill="#F6F3EC">0.95</text>
-            <text x="140" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#F6F3EC">RANDOM FOREST</text>
+            <rect x="146" y="92" width="34" height="76" fill="#F5F2ED" />
+            <text x="146" y="87" font-family="IBM Plex Mono" font-size="9" fill="#F5F2ED">0.95</text>
+            <text x="140" y="182" font-family="IBM Plex Mono" font-size="7.5" fill="#F5F2ED">RANDOM FOREST</text>
             <line x1="10" y1="168" x2="210" y2="168" stroke="#3A3A38" stroke-width="1" />
           </svg>
         </div>
@@ -298,7 +306,7 @@ st.markdown(
 # =========================
 st.markdown("## Patient Assessment")
 st.markdown(
-    "<p style='font-size:.85rem;color:#7C7C77;margin-top:-.5rem;margin-bottom:1rem;'>"
+    "<p style='font-size:.85rem;color:#777777;margin-top:-.5rem;margin-bottom:1rem;'>"
     "Enter the child's clinical data across the four sections, then run the screening.</p>",
     unsafe_allow_html=True,
 )
@@ -481,7 +489,7 @@ if predict_clicked:
             </div>
           </div>
           <div style="height:1px;background:#D8D3C9;margin:1.6rem 0;"></div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#7C7C77;margin-bottom:1rem;">Key Influencing Factors</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#777777;margin-bottom:1rem;">Key Influencing Factors</div>
           <div class="factors">{factors_html}</div>
         </div>
         """,
