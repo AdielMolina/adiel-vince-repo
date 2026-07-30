@@ -4,12 +4,6 @@ import pandas as pd
 import numpy as np
 
 # =========================
-# Load trained model
-# =========================
-
-model = joblib.load("appendicitis_model.pkl")
-
-# =========================
 # Page setup
 # =========================
 
@@ -19,6 +13,19 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+
+# =========================
+# Load trained model
+# =========================
+
+try:
+    model = joblib.load("appendicitis_model.pkl")
+except FileNotFoundError:
+    st.error("Model file not found. Please make sure appendicitis_model.pkl is in the same folder as this app.")
+    st.stop()
+except Exception as e:
+    st.error("The model could not be loaded. Please check the model file and requirements.txt.")
+    st.stop()
 
 # =========================
 # Design tokens + global style
@@ -306,6 +313,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.info(
+    "How to use: Fill in the patient information, symptoms, blood test results and ultrasound findings. "
+    "Then click 'Predict Appendicitis Risk' to view the screening result and probability."
+)
+
 
 def glossary(title, terms):
     """Render a plain-language glossary as a collapsible dropdown.
@@ -482,7 +494,25 @@ with st.container(key="sec_ultrasound"):
         free_fluids = st.selectbox("Free Fluids", ["no", "yes"],
                                     help="Extra fluid seen in the belly on the scan — can be a "
                                          "sign of inflammation.")
+warnings = []
 
+if appendix_on_us == "no" and appendix_diameter > 6:
+    warnings.append(
+        "Appendix diameter is high, but appendix is marked as not seen on ultrasound. Please check the ultrasound input."
+    )
+
+if alvarado_score <= 3 and paediatric_score >= 8:
+    warnings.append(
+        "Alvarado Score is low but Paediatric Appendicitis Score is high. Please check if both scores were entered correctly."
+    )
+
+if wbc_count <= 5 and crp >= 100:
+    warnings.append(
+        "CRP is very high while WBC count is low. This may be possible, but please verify the blood test values."
+    )
+
+for warning in warnings:
+    st.warning(warning)
 # =========================
 # Prediction
 # =========================
@@ -555,6 +585,7 @@ if predict_clicked:
             unsafe_allow_html=True
         )
 
+    
     # Prediction probability
     if hasattr(model, "predict_proba"):
 
@@ -572,6 +603,41 @@ if predict_clicked:
         if "appendicitis" in classes:
             gauge_pct = float(probabilities[classes.index("appendicitis")]) * 100
 
+        summary_text = f"""
+            AppendiCheck Kids Result Summary
+
+            Prediction: {prediction}
+            Appendicitis probability: {gauge_pct:.2f}%
+
+            Patient inputs:
+            Age: {age}
+            Sex: {sex}
+            BMI: {bmi}
+            Alvarado Score: {alvarado_score}
+            Paediatric Appendicitis Score: {paediatric_score}
+            Lower Right Abdominal Pain: {lower_right_pain}
+            Migratory Pain: {migratory_pain}
+            Nausea: {nausea}
+            Loss of Appetite: {loss_of_appetite}
+            Peritonitis: {peritonitis}
+            WBC Count: {wbc_count}
+            CRP: {crp}
+            Neutrophil Percentage: {neutrophil_percentage}
+            Appendix Seen on Ultrasound: {appendix_on_us}
+            Appendix Diameter: {appendix_diameter}
+            Free Fluids: {free_fluids}
+
+            Disclaimer:
+            This is an educational screening support tool and does not replace professional medical diagnosis.
+            """
+
+        st.download_button(
+                label="Download Result Summary",
+                data=summary_text,
+                file_name="appendicheck_result_summary.txt",
+                mime="text/plain"
+            )
+        
         rows_html = ""
         for cls, prob in zip(classes, probabilities):
             pct = float(prob) * 100
@@ -605,7 +671,14 @@ if predict_clicked:
             """,
             unsafe_allow_html=True
         )
-
+        with st.expander("What does this result mean?"):
+            st.write(
+                "A higher appendicitis probability means the model found patterns similar to appendicitis cases "
+                "in the training data. A lower probability means the inputs look more similar to no-appendicitis cases."
+            )
+            st.write(
+                "This result should be used only as screening support. A doctor should make the final diagnosis."
+            )
 st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
 st.markdown(
