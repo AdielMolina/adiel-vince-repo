@@ -324,6 +324,7 @@ st.markdown(
 st.info(
     "How to use: Fill in the patient information, symptoms, blood test results and ultrasound findings. "
     "Then click 'Predict Appendicitis Risk' to view the screening result and probability."
+    "For explanations, press the ❓ buttons next to each input field"
 )
 
 
