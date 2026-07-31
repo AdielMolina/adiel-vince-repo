@@ -374,19 +374,6 @@ with st.container(key="sec_patient"):
     st.markdown('<div class="section-title">Clinical Scores</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Composite scores from standard assessment tools</div>', unsafe_allow_html=True)
 
-    glossary("What do these scores mean?", [
-        ("Alvarado Score",
-         " — A number from 0 to 10 that doctors work out by checking a child's symptoms, "
-         "examining their belly, and looking at a blood test. It adds points for things like pain, "
-         "fever, and high white blood cell count. The higher the number, the more likely it is "
-         "appendicitis. This score is usually given to you by a doctor or nurse after they examine "
-         "the child — you don't need to calculate it yourself."),
-        ("Paediatric Appendicitis Score",
-         " — Very similar to the Alvarado Score above, but designed specifically for children. "
-         "It's also a number from 0 to 10 given by a doctor after an exam, where higher means "
-         "more likely to be appendicitis."),
-    ])
-
     col4, col5 = st.columns(2)
     with col4:
         alvarado_score = st.slider("Alvarado Score", 0.0, 10.0, 5.0, 0.5,
@@ -400,24 +387,6 @@ with st.container(key="sec_patient"):
 with st.container(key="sec_symptoms"):
     st.markdown('<div class="section-title">Reported Symptoms</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Select yes/no for each presenting symptom</div>', unsafe_allow_html=True)
-
-    glossary("What do these words mean?", [
-        ("Lower Right Abdominal Pain",
-         " — Pain on the lower right side of the belly, roughly between the hip bone and the "
-         "belly button. This is where the appendix usually sits."),
-        ("Migratory Pain",
-         " — Pain that started near the belly button and then moved to the lower right side over "
-         "several hours. This moving pattern is a classic early sign of appendicitis."),
-        ("Nausea",
-         " — Feeling sick to the stomach, like you might vomit, even if you haven't actually "
-         "thrown up."),
-        ("Loss of Appetite",
-         " — Not wanting to eat, even foods the child usually likes."),
-        ("Peritonitis",
-         " — A sign that the lining inside the belly is irritated or infected. Doctors often check "
-         "for this by gently pressing on the belly and then releasing quickly — if it hurts more "
-         "when released than when pressed, that can be a sign of peritonitis."),
-    ])
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -443,20 +412,6 @@ with st.container(key="sec_blood"):
     st.markdown('<div class="section-title">Blood Test Results</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">These numbers come from a blood test done at a clinic or hospital</div>', unsafe_allow_html=True)
 
-    glossary("What do these blood test words mean?", [
-        ("WBC Count (White Blood Cell Count)",
-         " — White blood cells are the body's defence against infection. This number counts how "
-         "many are in the blood. When the body is fighting an infection like appendicitis, this "
-         "number often goes up."),
-        ("CRP (C-Reactive Protein)",
-         " — A substance made by the body when there's swelling or infection somewhere inside. "
-         "The higher this number, the more inflammation is likely happening in the body."),
-        ("Neutrophil Percentage",
-         " — Neutrophils are a type of white blood cell that respond first and fastest to an "
-         "infection, especially one caused by bacteria. A higher percentage of neutrophils often "
-         "means the body is actively fighting a bacterial infection."),
-    ])
-
     col1, col2, col3 = st.columns(3)
     with col1:
         wbc_count = st.slider("WBC Count (×10⁹/L)", 0.0, 40.0, 10.0, 0.1,
@@ -474,21 +429,6 @@ with st.container(key="sec_blood"):
 with st.container(key="sec_ultrasound"):
     st.markdown('<div class="section-title">Ultrasound Findings</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">These come from an ultrasound scan done by a doctor or radiographer</div>', unsafe_allow_html=True)
-
-    glossary("What do these ultrasound words mean?", [
-        ("Ultrasound",
-         " — A scan that uses sound waves to take a picture of the inside of the belly. "
-         "It doesn't hurt and doesn't use radiation. A trained person (a doctor or radiographer) "
-         "does the scan and looks at the pictures."),
-        ("Appendix Seen on Ultrasound",
-         " — Whether the person doing the scan was able to clearly see the appendix in the pictures."),
-        ("Appendix Diameter",
-         " — How wide the appendix measures on the scan, in millimetres (mm). A wider appendix "
-         "(usually above about 6–7 mm) can be a sign of appendicitis."),
-        ("Free Fluid",
-         " — Extra fluid seen around the organs in the belly on the scan. This can be a sign of "
-         "inflammation, or in serious cases, that the appendix has burst."),
-    ])
 
     col1, col2, col3 = st.columns(3)
     with col1:
